@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@aave/deploy-v3@git+https://github.com/mahalend/v3-deploy.git#aa99475bf6e561ed11d7b4fe0a4fbb85301f5175":
-  version "1.50.2"
-  resolved "git+https://github.com/mahalend/v3-deploy.git#aa99475bf6e561ed11d7b4fe0a4fbb85301f5175"
+"@aave/deploy-v3@git+https://github.com/mahalend/v3-deploy.git#8e13038d7626bc1d04e654acb27a593fc0ca90aa":
+  version "1.50.3"
+  resolved "git+https://github.com/mahalend/v3-deploy.git#8e13038d7626bc1d04e654acb27a593fc0ca90aa"
   dependencies:
     defender-relay-client "^1.11.1"
 
