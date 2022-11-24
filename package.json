@@ -1,6 +1,6 @@
 {
   "name": "@mahalend/core-v3",
-  "version": "1.16.2",
+  "version": "1.16.3",
   "description": "Aave Protocol V3 core smart contracts",
   "files": [
     "contracts",
@@ -31,7 +31,7 @@
     "prepublish": "npm run compile"
   },
   "devDependencies": {
-    "@aave/deploy-v3":  "git+https://github.com/mahalend/v3-deploy.git#aa99475bf6e561ed11d7b4fe0a4fbb85301f5175npm ",
+    "@aave/deploy-v3": "git+https://github.com/mahalend/v3-deploy.git#aa99475bf6e561ed11d7b4fe0a4fbb85301f5175npm ",
     "@mahalend/periphery-v3": "3.2.3",
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
     "@tenderly/hardhat-tenderly": "1.1.0-beta.5",
