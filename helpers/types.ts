@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers';
+import {BigNumber, BigNumberish} from 'ethers';
 
 export interface SymbolMap<T> {
   [symbol: string]: T;
@@ -13,6 +13,7 @@ export enum eEthereumNetwork {
   coverage = 'coverage',
   hardhat = 'hardhat',
   tenderlyMain = 'tenderlyMain',
+  rinkeby = 'rinkeby',
 }
 
 export enum eContractid {
@@ -330,12 +331,16 @@ export interface IReserveBorrowParams {
   stableBorrowRateEnabled: boolean;
   reserveDecimals: string;
   borrowCap: string;
+  flashLoanEnabled?: boolean;
+  debtCeiling?: string;
+  borrowableIsolation?: boolean;
 }
 
 export interface IReserveCollateralParams {
   baseLTVAsCollateral: string;
   liquidationThreshold: string;
   liquidationBonus: string;
+  liquidationProtocolFee?: string;
 }
 export interface IMarketRates {
   borrowRate: string;
@@ -352,6 +357,7 @@ export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.main]: T;
   [eEthereumNetwork.hardhat]: T;
   [eEthereumNetwork.tenderlyMain]: T;
+  [eEthereumNetwork.rinkeby]: T;
 }
 
 export enum RateMode {
@@ -383,6 +389,10 @@ export interface ICommonConfiguration {
   StableDebtTokenNamePrefix: string;
   VariableDebtTokenNamePrefix: string;
   SymbolPrefix: string;
+  OracleQuoteCurrencyAddress?: tEthereumAddress;
+  OracleQuoteCurrency?: string;
+  OracleQuoteUnit?: string;
+  WrappedNativeTokenSymbol?: string;
   ProviderId: number;
   ProtocolGlobalParams: IProtocolGlobalConfig;
   Mocks: IMocksConfig;
@@ -392,23 +402,78 @@ export interface ICommonConfiguration {
   Pool: tEthereumAddress | undefined;
   TokenDistributor: tEthereumAddress | undefined;
   AaveOracle: tEthereumAddress | undefined;
-  FallbackOracle: tEthereumAddress | undefined;
-  ChainlinkAggregator: tEthereumAddress | undefined;
+  FallbackOracle: tEthereumAddress | undefined | iParamsPerNetwork<tEthereumAddress>;
+  ChainlinkAggregator: tEthereumAddress | undefined | iParamsPerNetwork<ITokenAddress>;
   PoolAdmin: tEthereumAddress | undefined;
   PoolAdminIndex: number;
   EmergencyAdmin: tEthereumAddress | undefined;
   EmergencyAdminIndex: number;
-  ReserveAssets: SymbolMap<tEthereumAddress> | SymbolMap<undefined>;
+  ReserveAssets:
+    | SymbolMap<tEthereumAddress>
+    | SymbolMap<undefined>
+    | iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
   ReservesConfig: iMultiPoolsAssets<IReserveParams>;
   ATokenDomainSeparator: string;
   WETH: tEthereumAddress | undefined;
   WrappedNativeToken: tEthereumAddress | undefined;
-  ReserveFactorTreasuryAddress: tEthereumAddress;
+  ReserveFactorTreasuryAddress: tEthereumAddress | iParamsPerNetwork<tEthereumAddress>;
   IncentivesController: tEthereumAddress | undefined;
+  IncentivesConfig?: IncentivesConfig;
+  EModes?: SymbolMap<EMode>;
+  L2PoolEnabled?: iParamsPerNetwork<boolean>;
+  ParaswapRegistry?: iParamsPerNetwork<tEthereumAddress>;
+  FlashLoanPremiums?: {
+    total: number;
+    protocol: number;
+  };
+}
+
+export interface IncentivesConfig {
+  enabled: iParamsPerNetwork<boolean>;
+  rewards: iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
+  rewardsOracle: iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
+  incentivesInput: iParamsPerNetwork<RewardsConfigInput[]>;
+}
+
+export interface EMode {
+  id: string;
+  ltv: string;
+  liquidationThreshold: string;
+  liquidationBonus: string;
+  label: string;
+  oracleId?: string;
+  assets: string[];
+}
+
+export declare enum AssetType {
+  AToken = 0,
+  VariableDebtToken = 1,
+  StableDebtToken = 2,
+}
+
+export interface RewardsConfigInput {
+  emissionPerSecond: BigNumberish;
+  duration: number;
+  asset: string;
+  assetType: AssetType;
+  reward: string;
+  rewardOracle: string;
+  transferStrategy: TransferStrategy;
+  transferStrategyParams: string;
+}
+
+export declare enum TransferStrategy {
+  PullRewardsStrategy = 0,
+  StakedRewardsStrategy = 1,
+}
+
+export interface ITokenAddress {
+  [token: string]: tEthereumAddress;
 }
 
 export interface IAaveConfiguration extends ICommonConfiguration {
   ReservesConfig: iMultiPoolsAssets<IReserveParams>;
+  StkAaveProxy?: iParamsPerNetwork<tEthereumAddress>;
 }
 
 export type PoolConfiguration = ICommonConfiguration | IAaveConfiguration;
