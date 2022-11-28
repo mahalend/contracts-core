@@ -31,7 +31,7 @@
     "prepublish": "npm run compile"
   },
   "devDependencies": {
-    "@aave/deploy-v3": "git+https://github.com/mahalend/v3-deploy.git#8e13038d7626bc1d04e654acb27a593fc0ca90aa",
+    "@aave/deploy-v3": "git+https://github.com/mahalend/contracts-deploy.git#8e13038d7626bc1d04e654acb27a593fc0ca90aa",
     "@mahalend/periphery-v3": "3.2.3",
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
     "@tenderly/hardhat-tenderly": "1.1.0-beta.5",
