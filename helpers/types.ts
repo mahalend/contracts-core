@@ -384,40 +384,40 @@ export interface IRate {
 }
 
 export interface ICommonConfiguration {
-  MarketId: string;
-  ATokenNamePrefix: string;
-  StableDebtTokenNamePrefix: string;
-  VariableDebtTokenNamePrefix: string;
-  SymbolPrefix: string;
+  MarketId?: string;
+  ATokenNamePrefix?: string;
+  StableDebtTokenNamePrefix?: string;
+  VariableDebtTokenNamePrefix?: string;
+  SymbolPrefix?: string;
   OracleQuoteCurrencyAddress?: tEthereumAddress;
   OracleQuoteCurrency?: string;
   OracleQuoteUnit?: string;
   WrappedNativeTokenSymbol?: string;
-  ProviderId: number;
-  ProtocolGlobalParams: IProtocolGlobalConfig;
-  Mocks: IMocksConfig;
-  ProviderRegistry: tEthereumAddress | undefined;
-  ProviderRegistryOwner: tEthereumAddress | undefined;
-  PoolConfigurator: tEthereumAddress | undefined;
-  Pool: tEthereumAddress | undefined;
-  TokenDistributor: tEthereumAddress | undefined;
-  AaveOracle: tEthereumAddress | undefined;
-  FallbackOracle: tEthereumAddress | undefined | iParamsPerNetwork<tEthereumAddress>;
-  ChainlinkAggregator: tEthereumAddress | undefined | iParamsPerNetwork<ITokenAddress>;
-  PoolAdmin: tEthereumAddress | undefined;
-  PoolAdminIndex: number;
-  EmergencyAdmin: tEthereumAddress | undefined;
-  EmergencyAdminIndex: number;
-  ReserveAssets:
+  ProviderId?: number;
+  ProtocolGlobalParams?: IProtocolGlobalConfig;
+  Mocks?: IMocksConfig;
+  ProviderRegistry?: tEthereumAddress | undefined;
+  ProviderRegistryOwner?: tEthereumAddress | undefined;
+  PoolConfigurator?: tEthereumAddress | undefined;
+  Pool?: tEthereumAddress | undefined;
+  TokenDistributor?: tEthereumAddress | undefined;
+  AaveOracle?: tEthereumAddress | undefined;
+  FallbackOracle?: tEthereumAddress | undefined | iParamsPerNetwork<tEthereumAddress>;
+  ChainlinkAggregator?: tEthereumAddress | undefined | iParamsPerNetwork<ITokenAddress>;
+  PoolAdmin?: tEthereumAddress | undefined;
+  PoolAdminIndex?: number;
+  EmergencyAdmin?: tEthereumAddress | undefined;
+  EmergencyAdminIndex?: number;
+  ReserveAssets?:
     | SymbolMap<tEthereumAddress>
     | SymbolMap<undefined>
     | iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
-  ReservesConfig: iMultiPoolsAssets<IReserveParams>;
-  ATokenDomainSeparator: string;
-  WETH: tEthereumAddress | undefined;
-  WrappedNativeToken: tEthereumAddress | undefined;
-  ReserveFactorTreasuryAddress: tEthereumAddress | iParamsPerNetwork<tEthereumAddress>;
-  IncentivesController: tEthereumAddress | undefined;
+  ReservesConfig?: iMultiPoolsAssets<IReserveParams>;
+  ATokenDomainSeparator?: string;
+  WETH?: tEthereumAddress | undefined;
+  WrappedNativeToken?: tEthereumAddress | undefined;
+  ReserveFactorTreasuryAddress?: tEthereumAddress | iParamsPerNetwork<tEthereumAddress>;
+  IncentivesController?: tEthereumAddress | undefined;
   IncentivesConfig?: IncentivesConfig;
   EModes?: SymbolMap<EMode>;
   L2PoolEnabled?: iParamsPerNetwork<boolean>;
