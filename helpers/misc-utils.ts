@@ -1,5 +1,5 @@
-import { Wallet, BigNumber } from 'ethers';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
+import {Wallet, BigNumber, ContractTransaction} from 'ethers';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -9,6 +9,8 @@ export const timeLatest = async () => {
   const block = await hre.ethers.provider.getBlock('latest');
   return BigNumber.from(block.timestamp);
 };
+
+export const waitForTx = async (tx: ContractTransaction) => await tx.wait(1);
 
 export const setBlocktime = async (time: number) => {
   await hre.ethers.provider.send('evm_setNextBlockTimestamp', [time]);
