@@ -1,16 +1,16 @@
-import { ethers } from 'ethers';
-import { signTypedData_v4 } from 'eth-sig-util';
-import { fromRpcSig, ECDSASignature } from 'ethereumjs-util';
-import { tEthereumAddress, tStringTokenSmallUnits } from './types';
-import { MintableERC20 } from '../types/MintableERC20';
-import { getContract } from '@aave/deploy-v3';
-import { impersonateAccountsHardhat } from './misc-utils';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { InitializableImmutableAdminUpgradeabilityProxy } from '../types';
+import {ethers} from 'ethers';
+import {signTypedData_v4} from 'eth-sig-util';
+import {fromRpcSig, ECDSASignature} from 'ethereumjs-util';
+import {tEthereumAddress, tStringTokenSmallUnits} from './types';
+import {MintableERC20} from '../types/MintableERC20';
+import {getContract} from '@aave/deploy-v3';
+import {impersonateAccountsHardhat} from './misc-utils';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
+import {InitializableImmutableAdminUpgradeabilityProxy} from '../types';
 
 declare var hre: HardhatRuntimeEnvironment;
 
-export type MockTokenMap = { [symbol: string]: MintableERC20 };
+export type MockTokenMap = {[symbol: string]: MintableERC20};
 
 export const convertToCurrencyDecimals = async (tokenAddress: tEthereumAddress, amount: string) => {
   const token = await getContract('IERC20Detailed', tokenAddress);
@@ -32,17 +32,17 @@ export const buildPermitParams = (
 ) => ({
   types: {
     EIP712Domain: [
-      { name: 'name', type: 'string' },
-      { name: 'version', type: 'string' },
-      { name: 'chainId', type: 'uint256' },
-      { name: 'verifyingContract', type: 'address' },
+      {name: 'name', type: 'string'},
+      {name: 'version', type: 'string'},
+      {name: 'chainId', type: 'uint256'},
+      {name: 'verifyingContract', type: 'address'},
     ],
     Permit: [
-      { name: 'owner', type: 'address' },
-      { name: 'spender', type: 'address' },
-      { name: 'value', type: 'uint256' },
-      { name: 'nonce', type: 'uint256' },
-      { name: 'deadline', type: 'uint256' },
+      {name: 'owner', type: 'address'},
+      {name: 'spender', type: 'address'},
+      {name: 'value', type: 'uint256'},
+      {name: 'nonce', type: 'uint256'},
+      {name: 'deadline', type: 'uint256'},
     ],
   },
   primaryType: 'Permit' as const,
@@ -83,16 +83,16 @@ export const buildDelegationWithSigParams = (
 ) => ({
   types: {
     EIP712Domain: [
-      { name: 'name', type: 'string' },
-      { name: 'version', type: 'string' },
-      { name: 'chainId', type: 'uint256' },
-      { name: 'verifyingContract', type: 'address' },
+      {name: 'name', type: 'string'},
+      {name: 'version', type: 'string'},
+      {name: 'chainId', type: 'uint256'},
+      {name: 'verifyingContract', type: 'address'},
     ],
     DelegationWithSig: [
-      { name: 'delegatee', type: 'address' },
-      { name: 'value', type: 'uint256' },
-      { name: 'nonce', type: 'uint256' },
-      { name: 'deadline', type: 'uint256' },
+      {name: 'delegatee', type: 'address'},
+      {name: 'value', type: 'uint256'},
+      {name: 'nonce', type: 'uint256'},
+      {name: 'deadline', type: 'uint256'},
     ],
   },
   primaryType: 'DelegationWithSig' as const,
@@ -119,7 +119,7 @@ export const getProxyImplementation = async (proxyAdminAddress: string, proxyAdd
     'InitializableImmutableAdminUpgradeabilityProxy',
     proxyAddress,
     proxyAdminSigner
-  )) as InitializableImmutableAdminUpgradeabilityProxy;
+  )) as unknown as InitializableImmutableAdminUpgradeabilityProxy;
 
   const implementationAddress = await proxy.callStatic.implementation();
   return implementationAddress;
