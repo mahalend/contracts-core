@@ -7,13 +7,11 @@ export interface SymbolMap<T> {
 export type eNetwork = eEthereumNetwork;
 
 export enum eEthereumNetwork {
-  kovan = 'kovan',
-  ropsten = 'ropsten',
+  goerli = 'goerli',
   main = 'main',
   coverage = 'coverage',
   hardhat = 'hardhat',
-  tenderlyMain = 'tenderlyMain',
-  rinkeby = 'rinkeby',
+  polygon = 'polygon',
 }
 
 export enum eContractid {
@@ -352,12 +350,10 @@ export interface iParamsPerNetworkAll<T> extends iEthereumParamsPerNetwork<T> {}
 
 export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.coverage]: T;
-  [eEthereumNetwork.kovan]: T;
-  [eEthereumNetwork.ropsten]: T;
+  [eEthereumNetwork.goerli]: T;
   [eEthereumNetwork.main]: T;
   [eEthereumNetwork.hardhat]: T;
-  [eEthereumNetwork.tenderlyMain]: T;
-  [eEthereumNetwork.rinkeby]: T;
+  [eEthereumNetwork.polygon]: T;
 }
 
 export enum RateMode {

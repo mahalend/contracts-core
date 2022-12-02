@@ -24,7 +24,7 @@ export const CommonsConfig: ICommonConfiguration = {
       // Note: EUR/USD, not EURS dedicated oracle
       EURS: '0xb49f677943BC038e9857d61E7d053CaA2C1734C1',
     },
-    [eEthereumNetwork.ropsten]: {
+    [eEthereumNetwork.goerli]: {
       AAVE: ZERO_ADDRESS,
       DAI: ZERO_ADDRESS,
       LINK: ZERO_ADDRESS,
@@ -34,7 +34,7 @@ export const CommonsConfig: ICommonConfiguration = {
       USDT: ZERO_ADDRESS,
       EURS: ZERO_ADDRESS,
     },
-    [eEthereumNetwork.kovan]: {
+    [eEthereumNetwork.polygon]: {
       AAVE: ZERO_ADDRESS,
       DAI: ZERO_ADDRESS,
       LINK: ZERO_ADDRESS,
@@ -64,68 +64,35 @@ export const CommonsConfig: ICommonConfiguration = {
       USDT: ZERO_ADDRESS,
       EURS: ZERO_ADDRESS,
     },
-    [eEthereumNetwork.tenderlyMain]: {
-      AAVE: ZERO_ADDRESS,
-      DAI: ZERO_ADDRESS,
-      LINK: ZERO_ADDRESS,
-      USDC: ZERO_ADDRESS,
-      WBTC: ZERO_ADDRESS,
-      WETH: ZERO_ADDRESS,
-      USDT: ZERO_ADDRESS,
-      EURS: ZERO_ADDRESS,
-    },
-    [eEthereumNetwork.rinkeby]: {
-      AAVE: ZERO_ADDRESS,
-      DAI: ZERO_ADDRESS,
-      LINK: ZERO_ADDRESS,
-      USDC: ZERO_ADDRESS,
-      WBTC: ZERO_ADDRESS,
-      WETH: ZERO_ADDRESS,
-      USDT: ZERO_ADDRESS,
-      EURS: ZERO_ADDRESS,
-    },
   },
   ReserveFactorTreasuryAddress: {
-    [eEthereumNetwork.kovan]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
+    [eEthereumNetwork.goerli]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
     [eEthereumNetwork.main]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',
-    [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
     [eEthereumNetwork.coverage]: ZERO_ADDRESS,
-    [eEthereumNetwork.ropsten]: ZERO_ADDRESS,
+    [eEthereumNetwork.polygon]: ZERO_ADDRESS,
     [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
-    [eEthereumNetwork.tenderlyMain]: ZERO_ADDRESS,
-    [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
   },
   FallbackOracle: {
-    [eEthereumNetwork.kovan]: '0x50913E8E1c650E790F8a1E741FF9B1B1bB251dfe',
+    [eEthereumNetwork.goerli]: '0x50913E8E1c650E790F8a1E741FF9B1B1bB251dfe',
     [eEthereumNetwork.main]: '0x5b09e578cfeaa23f1b11127a658855434e4f3e09',
-    [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
+    [eEthereumNetwork.polygon]: ZERO_ADDRESS,
     [eEthereumNetwork.coverage]: ZERO_ADDRESS,
     [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
-    [eEthereumNetwork.ropsten]: ZERO_ADDRESS,
-    [eEthereumNetwork.tenderlyMain]: ZERO_ADDRESS,
   },
   ReservesConfig: {},
   IncentivesConfig: {
     enabled: {
-      [eEthereumNetwork.kovan]: false,
-      [eEthereumNetwork.rinkeby]: false,
-      [eEthereumNetwork.ropsten]: false,
-      [eEthereumNetwork.tenderlyMain]: false,
+      [eEthereumNetwork.goerli]: false,
+      [eEthereumNetwork.polygon]: false,
       [eEthereumNetwork.main]: false,
       [eEthereumNetwork.hardhat]: false,
       [eEthereumNetwork.coverage]: false,
     },
     rewards: {
-      [eEthereumNetwork.kovan]: {
+      [eEthereumNetwork.goerli]: {
         StkAave: ZERO_ADDRESS,
       },
-      [eEthereumNetwork.rinkeby]: {
-        StkAave: ZERO_ADDRESS,
-      },
-      [eEthereumNetwork.ropsten]: {
-        StkAave: ZERO_ADDRESS,
-      },
-      [eEthereumNetwork.tenderlyMain]: {
+      [eEthereumNetwork.polygon]: {
         StkAave: ZERO_ADDRESS,
       },
       [eEthereumNetwork.main]: {
@@ -139,16 +106,10 @@ export const CommonsConfig: ICommonConfiguration = {
       },
     },
     rewardsOracle: {
-      [eEthereumNetwork.kovan]: {
+      [eEthereumNetwork.goerli]: {
         StkAave: ZERO_ADDRESS,
       },
-      [eEthereumNetwork.rinkeby]: {
-        StkAave: ZERO_ADDRESS,
-      },
-      [eEthereumNetwork.ropsten]: {
-        StkAave: ZERO_ADDRESS,
-      },
-      [eEthereumNetwork.tenderlyMain]: {
+      [eEthereumNetwork.polygon]: {
         StkAave: ZERO_ADDRESS,
       },
       [eEthereumNetwork.main]: {
@@ -162,10 +123,8 @@ export const CommonsConfig: ICommonConfiguration = {
       },
     },
     incentivesInput: {
-      [eEthereumNetwork.kovan]: [],
-      [eEthereumNetwork.rinkeby]: [],
-      [eEthereumNetwork.ropsten]: [],
-      [eEthereumNetwork.tenderlyMain]: [],
+      [eEthereumNetwork.goerli]: [],
+      [eEthereumNetwork.polygon]: [],
       [eEthereumNetwork.main]: [],
       [eEthereumNetwork.hardhat]: [],
       [eEthereumNetwork.coverage]: [],
@@ -182,22 +141,18 @@ export const CommonsConfig: ICommonConfiguration = {
     },
   },
   L2PoolEnabled: {
-    [eEthereumNetwork.kovan]: false,
-    [eEthereumNetwork.rinkeby]: false,
-    [eEthereumNetwork.ropsten]: false,
-    [eEthereumNetwork.tenderlyMain]: false,
+    [eEthereumNetwork.goerli]: false,
+    [eEthereumNetwork.polygon]: false,
     [eEthereumNetwork.main]: false,
     [eEthereumNetwork.hardhat]: false,
     [eEthereumNetwork.coverage]: false,
   },
   ParaswapRegistry: {
     [eEthereumNetwork.main]: '0xa68bEA62Dc4034A689AA0F58A76681433caCa663',
-    [eEthereumNetwork.rinkeby]: ZERO_ADDRESS,
+    [eEthereumNetwork.goerli]: ZERO_ADDRESS,
     [eEthereumNetwork.coverage]: ZERO_ADDRESS,
     [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
-    [eEthereumNetwork.ropsten]: ZERO_ADDRESS,
-    [eEthereumNetwork.tenderlyMain]: ZERO_ADDRESS,
-    [eEthereumNetwork.kovan]: ZERO_ADDRESS,
+    [eEthereumNetwork.polygon]: ZERO_ADDRESS,
   },
   FlashLoanPremiums: {
     total: 0.0005e4,
