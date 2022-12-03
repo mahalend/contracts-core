@@ -1,6 +1,6 @@
 {
   "name": "@mahalend/core-v3",
-  "version": "1.16.4",
+  "version": "1.16.5",
   "description": "Aave Protocol V3 core smart contracts",
   "files": [
     "contracts",
