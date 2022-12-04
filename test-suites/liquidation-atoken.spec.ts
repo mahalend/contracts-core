@@ -1,13 +1,13 @@
-import { expect } from 'chai';
-import { BigNumber } from 'ethers';
-import { MAX_UINT_AMOUNT, oneEther } from '../helpers/constants';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { calcExpectedVariableDebtTokenBalance } from './helpers/utils/calculations';
-import { getUserData, getReserveData } from './helpers/utils/helpers';
-import { makeSuite } from './helpers/make-suite';
-import { waitForTx } from '@aave/deploy-v3';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
+import {expect} from 'chai';
+import {BigNumber} from 'ethers';
+import {MAX_UINT_AMOUNT, oneEther} from '../helpers/constants';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {calcExpectedVariableDebtTokenBalance} from './helpers/utils/calculations';
+import {getUserData, getReserveData} from './helpers/utils/helpers';
+import {makeSuite} from './helpers/make-suite';
+import {waitForTx} from '@mahalend/deploy-v3';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -22,14 +22,14 @@ makeSuite('Pool Liquidation: Liquidator receiving aToken', (testEnv) => {
   let oracleBaseDecimals: number;
 
   before(async () => {
-    const { aaveOracle, addressesProvider, oracle } = testEnv;
+    const {aaveOracle, addressesProvider, oracle} = testEnv;
     oracleBaseDecimals = (await (await aaveOracle.BASE_CURRENCY_UNIT()).toString().length) - 1;
 
     await waitForTx(await addressesProvider.setPriceOracle(oracle.address));
   });
 
   after(async () => {
-    const { aaveOracle, addressesProvider } = testEnv;
+    const {aaveOracle, addressesProvider} = testEnv;
     await waitForTx(await addressesProvider.setPriceOracle(aaveOracle.address));
   });
 

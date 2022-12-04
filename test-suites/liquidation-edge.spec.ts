@@ -1,9 +1,9 @@
-import { expect } from 'chai';
-import { BigNumber, utils } from 'ethers';
-import { MAX_UINT_AMOUNT } from '../helpers/constants';
-import { RateMode } from '../helpers/types';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
+import {expect} from 'chai';
+import {BigNumber, utils} from 'ethers';
+import {MAX_UINT_AMOUNT} from '../helpers/constants';
+import {RateMode} from '../helpers/types';
+import {makeSuite, TestEnv} from './helpers/make-suite';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
 
 import './helpers/utils/wadraymath';
 import {
@@ -12,7 +12,7 @@ import {
   waitForTx,
   StableDebtToken__factory,
   VariableDebtToken__factory,
-} from '@aave/deploy-v3';
+} from '@mahalend/deploy-v3';
 
 makeSuite('Pool Liquidation: Edge cases', (testEnv: TestEnv) => {
   let snap: string;
@@ -25,18 +25,18 @@ makeSuite('Pool Liquidation: Edge cases', (testEnv: TestEnv) => {
   });
 
   before(async () => {
-    const { addressesProvider, oracle } = testEnv;
+    const {addressesProvider, oracle} = testEnv;
 
     await waitForTx(await addressesProvider.setPriceOracle(oracle.address));
   });
 
   after(async () => {
-    const { aaveOracle, addressesProvider } = testEnv;
+    const {aaveOracle, addressesProvider} = testEnv;
     await waitForTx(await addressesProvider.setPriceOracle(aaveOracle.address));
   });
 
   it('ValidationLogic `executeLiquidationCall` where user has variable and stable debt, but variable debt is insufficient to cover the full liquidation amount', async () => {
-    const { pool, users, dai, weth, oracle } = testEnv;
+    const {pool, users, dai, weth, oracle} = testEnv;
 
     const depositor = users[0];
     const borrower = users[1];
@@ -98,7 +98,7 @@ makeSuite('Pool Liquidation: Edge cases', (testEnv: TestEnv) => {
   });
 
   it('Liquidation repay asset completely, asset should not be set as borrowed anymore', async () => {
-    const { pool, users, dai, usdc, weth, oracle } = testEnv;
+    const {pool, users, dai, usdc, weth, oracle} = testEnv;
 
     const depositor = users[0];
     const borrower = users[1];

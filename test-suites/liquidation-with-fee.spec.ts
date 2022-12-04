@@ -1,33 +1,33 @@
-import { expect } from 'chai';
-import { BigNumber, utils } from 'ethers';
-import { MAX_UINT_AMOUNT, oneEther } from '../helpers/constants';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { AToken__factory } from '../types';
-import { calcExpectedStableDebtTokenBalance } from './helpers/utils/calculations';
-import { getReserveData, getUserData } from './helpers/utils/helpers';
-import { makeSuite } from './helpers/make-suite';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { waitForTx, increaseTime, evmSnapshot, evmRevert } from '@aave/deploy-v3';
+import {expect} from 'chai';
+import {BigNumber, utils} from 'ethers';
+import {MAX_UINT_AMOUNT, oneEther} from '../helpers/constants';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {AToken__factory} from '../types';
+import {calcExpectedStableDebtTokenBalance} from './helpers/utils/calculations';
+import {getReserveData, getUserData} from './helpers/utils/helpers';
+import {makeSuite} from './helpers/make-suite';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
+import {waitForTx, increaseTime, evmSnapshot, evmRevert} from '@mahalend/deploy-v3';
 
 declare var hre: HardhatRuntimeEnvironment;
 
 makeSuite('Pool Liquidation: Add fee to liquidations', (testEnv) => {
-  const { INVALID_HF } = ProtocolErrors;
+  const {INVALID_HF} = ProtocolErrors;
 
   before(async () => {
-    const { addressesProvider, oracle } = testEnv;
+    const {addressesProvider, oracle} = testEnv;
 
     await waitForTx(await addressesProvider.setPriceOracle(oracle.address));
   });
 
   after(async () => {
-    const { aaveOracle, addressesProvider } = testEnv;
+    const {aaveOracle, addressesProvider} = testEnv;
     await waitForTx(await addressesProvider.setPriceOracle(aaveOracle.address));
   });
 
   it('Sets the WETH protocol liquidation fee to 1000 (10.00%)', async () => {
-    const { configurator, weth, aave, helpersContract } = testEnv;
+    const {configurator, weth, aave, helpersContract} = testEnv;
 
     const oldWethLiquidationProtocolFee = await helpersContract.getLiquidationProtocolFee(
       weth.address

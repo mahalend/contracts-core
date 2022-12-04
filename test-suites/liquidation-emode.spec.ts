@@ -1,15 +1,15 @@
-import { expect } from 'chai';
-import { BigNumber, utils } from 'ethers';
-import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { getReserveData, getUserData } from './helpers/utils/helpers';
+import {expect} from 'chai';
+import {BigNumber, utils} from 'ethers';
+import {MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {makeSuite, TestEnv} from './helpers/make-suite';
+import {getReserveData, getUserData} from './helpers/utils/helpers';
 import './helpers/utils/wadraymath';
-import { evmRevert, evmSnapshot, waitForTx } from '@aave/deploy-v3';
+import {evmRevert, evmSnapshot, waitForTx} from '@mahalend/deploy-v3';
 
 makeSuite('Pool Liquidation: Liquidates borrows in eMode with price change', (testEnv: TestEnv) => {
-  const { INVALID_HF } = ProtocolErrors;
+  const {INVALID_HF} = ProtocolErrors;
 
   const CATEGORY = {
     id: BigNumber.from('1'),
@@ -23,18 +23,18 @@ makeSuite('Pool Liquidation: Liquidates borrows in eMode with price change', (te
   let snap: string;
 
   before(async () => {
-    const { addressesProvider, oracle } = testEnv;
+    const {addressesProvider, oracle} = testEnv;
     await waitForTx(await addressesProvider.setPriceOracle(oracle.address));
     snap = await evmSnapshot();
   });
 
   after(async () => {
-    const { aaveOracle, addressesProvider } = testEnv;
+    const {aaveOracle, addressesProvider} = testEnv;
     await waitForTx(await addressesProvider.setPriceOracle(aaveOracle.address));
   });
 
   it('Adds category id 1 (stablecoins)', async () => {
-    const { configurator, pool, poolAdmin } = testEnv;
+    const {configurator, pool, poolAdmin} = testEnv;
 
     expect(
       await configurator
@@ -67,7 +67,7 @@ makeSuite('Pool Liquidation: Liquidates borrows in eMode with price change', (te
   });
 
   it('Add DAI and USDC to category id 1', async () => {
-    const { configurator, pool, helpersContract, poolAdmin, dai, usdc } = testEnv;
+    const {configurator, pool, helpersContract, poolAdmin, dai, usdc} = testEnv;
 
     await configurator.connect(poolAdmin.signer).setAssetEModeCategory(dai.address, CATEGORY.id);
     await configurator.connect(poolAdmin.signer).setAssetEModeCategory(usdc.address, CATEGORY.id);

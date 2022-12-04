@@ -1,12 +1,12 @@
-import { expect } from 'chai';
-import { BigNumber, utils } from 'ethers';
-import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { makeSuite, TestEnv } from './helpers/make-suite';
+import {expect} from 'chai';
+import {BigNumber, utils} from 'ethers';
+import {MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {makeSuite, TestEnv} from './helpers/make-suite';
 import './helpers/utils/wadraymath';
-import { parseUnits, formatUnits, parseEther } from '@ethersproject/units';
-import { evmSnapshot, evmRevert, VariableDebtToken__factory } from '@aave/deploy-v3';
+import {parseUnits, formatUnits, parseEther} from '@ethersproject/units';
+import {evmSnapshot, evmRevert, VariableDebtToken__factory} from '@mahalend/deploy-v3';
 
 makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   const {
@@ -67,9 +67,9 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   });
 
   it('Admin adds a category for stablecoins with DAI and USDC', async () => {
-    const { configurator, helpersContract, dai, usdc, poolAdmin } = testEnv;
+    const {configurator, helpersContract, dai, usdc, poolAdmin} = testEnv;
 
-    const { id, ltv, lt, lb, oracle, label } = CATEGORIES.STABLECOINS;
+    const {id, ltv, lt, lb, oracle, label} = CATEGORIES.STABLECOINS;
 
     expect(
       await configurator.connect(poolAdmin.signer).setEModeCategory(id, ltv, lt, lb, oracle, label)
@@ -82,9 +82,9 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   });
 
   it('Admin adds a category for ethereum with WETH', async () => {
-    const { configurator, helpersContract, weth, poolAdmin } = testEnv;
+    const {configurator, helpersContract, weth, poolAdmin} = testEnv;
 
-    const { id, ltv, lt, lb, oracle, label } = CATEGORIES.ETHEREUM;
+    const {id, ltv, lt, lb, oracle, label} = CATEGORIES.ETHEREUM;
 
     expect(
       await configurator.connect(poolAdmin.signer).setEModeCategory(id, ltv, lt, lb, oracle, label)
@@ -121,7 +121,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
         .connect(user0.signer)
         .supply(dai.address, await convertToCurrencyDecimals(dai.address, '100'), user0.address, 0)
     );
-    const { usageAsCollateralEnabled: user0UseAsCollateral } =
+    const {usageAsCollateralEnabled: user0UseAsCollateral} =
       await helpersContract.getUserReserveData(dai.address, user0.address);
     expect(user0UseAsCollateral).to.be.true;
 
@@ -135,7 +135,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
           0
         )
     );
-    const { usageAsCollateralEnabled: user1UseAsCollateral } =
+    const {usageAsCollateralEnabled: user1UseAsCollateral} =
       await helpersContract.getUserReserveData(usdc.address, user1.address);
     expect(user1UseAsCollateral).to.be.true;
   });
@@ -232,7 +232,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
         .connect(user0.signer)
         .supply(weth.address, await convertToCurrencyDecimals(weth.address, '1'), user0.address, 0)
     );
-    const { usageAsCollateralEnabled } = await helpersContract.getUserReserveData(
+    const {usageAsCollateralEnabled} = await helpersContract.getUserReserveData(
       weth.address,
       user0.address
     );
@@ -260,7 +260,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
     // Supply 1 WETH, increasing totalCollateralBase
     const wethToSupply = await convertToCurrencyDecimals(weth.address, '1');
     expect(await pool.connect(user1.signer).supply(weth.address, wethToSupply, user1.address, 0));
-    const { usageAsCollateralEnabled } = await helpersContract.getUserReserveData(
+    const {usageAsCollateralEnabled} = await helpersContract.getUserReserveData(
       weth.address,
       user1.address
     );
@@ -444,7 +444,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
       usdc,
       users: [, , , user3, user4, user5],
     } = testEnv;
-    const { id } = CATEGORIES.STABLECOINS;
+    const {id} = CATEGORIES.STABLECOINS;
 
     expect(await helpersContract.getReserveEModeCategory(dai.address)).to.be.eq(id);
     expect(await helpersContract.getReserveEModeCategory(usdc.address)).to.be.eq(id);
@@ -503,7 +503,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
       usdc,
       users: [, , , user3, user4, user5],
     } = testEnv;
-    const { id } = CATEGORIES.STABLECOINS;
+    const {id} = CATEGORIES.STABLECOINS;
 
     expect(await helpersContract.getReserveEModeCategory(dai.address)).to.be.eq(id);
     expect(await helpersContract.getReserveEModeCategory(usdc.address)).to.be.eq(id);
@@ -556,7 +556,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
       users: [, user1],
     } = testEnv;
 
-    const { id } = CATEGORIES.STABLECOINS;
+    const {id} = CATEGORIES.STABLECOINS;
 
     const eModeData = await pool.getEModeCategoryData(id);
     const newLtv = BigNumber.from(0);
@@ -574,9 +574,9 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   });
 
   it('Admin sets Liquidation Threshold of stablecoins eMode category to zero (revert expected)', async () => {
-    const { configurator, pool } = testEnv;
+    const {configurator, pool} = testEnv;
 
-    const { id } = CATEGORIES.STABLECOINS;
+    const {id} = CATEGORIES.STABLECOINS;
 
     const eModeData = await pool.getEModeCategoryData(id);
     const newLiquidationThreshold = BigNumber.from(0);
@@ -594,9 +594,9 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   });
 
   it('Admin lowers LTV of stablecoins eMode category below an asset within the eModes individual LTV (revert expected)', async () => {
-    const { configurator, pool, dai, usdc, helpersContract } = testEnv;
+    const {configurator, pool, dai, usdc, helpersContract} = testEnv;
 
-    const { id } = CATEGORIES.STABLECOINS;
+    const {id} = CATEGORIES.STABLECOINS;
 
     const eModeData = await pool.getEModeCategoryData(id);
 
@@ -625,7 +625,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
       users: [, user1],
     } = testEnv;
 
-    const { id } = CATEGORIES.STABLECOINS;
+    const {id} = CATEGORIES.STABLECOINS;
 
     const userDataBefore = await pool.getUserAccountData(user1.address);
 
@@ -676,9 +676,9 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   });
 
   it('Admin lowers LT of stablecoins eMode category below an asset within the eModes individual LT (revert expected)', async () => {
-    const { configurator, pool } = testEnv;
+    const {configurator, pool} = testEnv;
 
-    const { id } = CATEGORIES.STABLECOINS;
+    const {id} = CATEGORIES.STABLECOINS;
 
     const eModeData = await pool.getEModeCategoryData(id);
 
@@ -704,7 +704,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
       users: [, user1],
     } = testEnv;
 
-    const { id } = CATEGORIES.STABLECOINS;
+    const {id} = CATEGORIES.STABLECOINS;
 
     const userDataBefore = await pool.getUserAccountData(user1.address);
 
@@ -727,8 +727,8 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   });
 
   it('Admin adds a category for stablecoins with DAI (own price feed)', async () => {
-    const { configurator, pool, poolAdmin, dai, usdc } = testEnv;
-    const { ltv, lt, lb, label } = CATEGORIES.STABLECOINS;
+    const {configurator, pool, poolAdmin, dai, usdc} = testEnv;
+    const {ltv, lt, lb, label} = CATEGORIES.STABLECOINS;
 
     const id = 3;
     const categoryOracle = usdc.address;
@@ -802,7 +802,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   });
 
   it('Remove DAI from stablecoin eMode category', async () => {
-    const { configurator, poolAdmin, dai, helpersContract } = testEnv;
+    const {configurator, poolAdmin, dai, helpersContract} = testEnv;
     expect(await helpersContract.getReserveEModeCategory(dai.address)).to.not.be.eq(0);
     expect(await configurator.connect(poolAdmin.signer).setAssetEModeCategory(dai.address, 0));
     expect(await helpersContract.getReserveEModeCategory(dai.address)).to.be.eq(0);
@@ -822,7 +822,7 @@ makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
     } = testEnv;
 
     // Setup eMode category for eth, use weth oracle as price source.
-    const { id, ltv, lt, lb, label } = CATEGORIES.ETHEREUM;
+    const {id, ltv, lt, lb, label} = CATEGORIES.ETHEREUM;
     expect(
       await configurator
         .connect(poolAdmin.signer)

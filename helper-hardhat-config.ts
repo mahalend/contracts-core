@@ -1,6 +1,6 @@
 // @ts-ignore
-import { HardhatNetworkForkingUserConfig, HardhatUserConfig } from 'hardhat/types';
-import { eEthereumNetwork, iParamsPerNetwork } from './helpers/types';
+import {HardhatNetworkForkingUserConfig, HardhatUserConfig} from 'hardhat/types';
+import {eEthereumNetwork, iParamsPerNetwork} from './helpers/types';
 
 require('dotenv').config();
 
@@ -28,10 +28,10 @@ export const buildForkConfig = (): HardhatNetworkForkingUserConfig | undefined =
 };
 
 export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
-  [eEthereumNetwork.kovan]: ALCHEMY_KEY
+  [eEthereumNetwork.goerli]: ALCHEMY_KEY
     ? `https://eth-kovan.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://kovan.infura.io/v3/${INFURA_KEY}`,
-  [eEthereumNetwork.ropsten]: ALCHEMY_KEY
+  [eEthereumNetwork.polygon]: ALCHEMY_KEY
     ? `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://ropsten.infura.io/v3/${INFURA_KEY}`,
   [eEthereumNetwork.main]: ALCHEMY_KEY
@@ -39,16 +39,14 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     : `https://mainnet.infura.io/v3/${INFURA_KEY}`,
   [eEthereumNetwork.coverage]: 'http://localhost:8555',
   [eEthereumNetwork.hardhat]: 'http://localhost:8545',
-  [eEthereumNetwork.tenderlyMain]: `https://rpc.tenderly.co/fork/${TENDERLY_FORK_ID}`,
-  [eEthereumNetwork.rinkeby]: `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
+  // [eEthereumNetwork.tenderlyMain]: `https://rpc.tenderly.co/fork/${TENDERLY_FORK_ID}`,
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
   [eEthereumNetwork.main]: 12406069,
-  [eEthereumNetwork.kovan]: undefined,
-  [eEthereumNetwork.ropsten]: undefined,
-  [eEthereumNetwork.rinkeby]: undefined,
+  [eEthereumNetwork.goerli]: undefined,
+  [eEthereumNetwork.polygon]: undefined,
   [eEthereumNetwork.coverage]: undefined,
   [eEthereumNetwork.hardhat]: undefined,
-  [eEthereumNetwork.tenderlyMain]: 12406069,
+  // [eEthereumNetwork.tenderlyMain]: 12406069,
 };

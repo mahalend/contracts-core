@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import { ProtocolErrors } from '../helpers/types';
-import { TestEnv, makeSuite } from './helpers/make-suite';
-import { ONE_ADDRESS } from '@aave/deploy-v3';
-import { ethers } from 'hardhat';
+import {expect} from 'chai';
+import {ProtocolErrors} from '../helpers/types';
+import {TestEnv, makeSuite} from './helpers/make-suite';
+import {ONE_ADDRESS} from '@mahalend/deploy-v3';
+import {ethers} from 'hardhat';
 
 makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   const NEW_ADDRESSES_PROVIDER_ID_2 = 2;
@@ -16,7 +16,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   } = ProtocolErrors;
 
   it('Checks the addresses provider is added to the registry', async () => {
-    const { addressesProvider, registry } = testEnv;
+    const {addressesProvider, registry} = testEnv;
 
     const providers = await registry.getAddressesProvidersList();
 
@@ -28,7 +28,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Tries to register an addresses provider with id 0 (revert expected)', async () => {
-    const { registry } = testEnv;
+    const {registry} = testEnv;
 
     await expect(
       registry.registerAddressesProvider(NEW_ADDRESSES_PROVIDER_ADDRESS, '0')
@@ -36,7 +36,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Registers a mock addresses provider', async () => {
-    const { registry } = testEnv;
+    const {registry} = testEnv;
 
     const providersBefore = await registry.getAddressesProvidersList();
 
@@ -69,7 +69,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Registers users[2] as another addresses provider', async () => {
-    const { users, registry } = testEnv;
+    const {users, registry} = testEnv;
 
     // Simulating an addresses provider using the users[2] wallet address
     expect(await registry.registerAddressesProvider(users[2].address, NEW_ADDRESSES_PROVIDER_ID_3))
@@ -89,7 +89,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Removes the mock addresses provider', async () => {
-    const { users, registry, addressesProvider } = testEnv;
+    const {users, registry, addressesProvider} = testEnv;
 
     const providersBefore = await registry.getAddressesProvidersList();
 
@@ -114,7 +114,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Tries to remove an already unregistered addressesProvider (revert expected)', async () => {
-    const { users, registry } = testEnv;
+    const {users, registry} = testEnv;
 
     await expect(
       registry.unregisterAddressesProvider(NEW_ADDRESSES_PROVIDER_ADDRESS)
@@ -122,7 +122,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Tries to add an already registered addressesProvider with a different id (revert expected)', async () => {
-    const { registry, addressesProvider } = testEnv;
+    const {registry, addressesProvider} = testEnv;
 
     const id = await registry.getAddressesProviderIdByAddress(addressesProvider.address);
     expect(id).not.to.be.eq(0);
@@ -147,7 +147,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Tries to add an addressesProvider with an already used id (revert expected)', async () => {
-    const { users, registry, addressesProvider } = testEnv;
+    const {users, registry, addressesProvider} = testEnv;
 
     const id = await registry.getAddressesProviderIdByAddress(addressesProvider.address);
     expect(id).not.to.be.eq(0);
@@ -173,7 +173,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Reregisters the mock addresses provider after it being removed', async () => {
-    const { registry } = testEnv;
+    const {registry} = testEnv;
 
     const providersBefore = await registry.getAddressesProvidersList();
 
@@ -206,7 +206,7 @@ makeSuite('AddressesProviderRegistry', (testEnv: TestEnv) => {
   });
 
   it('Removes the last addresses provider', async () => {
-    const { registry, addressesProvider } = testEnv;
+    const {registry, addressesProvider} = testEnv;
 
     const providersBefore = await registry.getAddressesProvidersList();
     const providerToRemove = providersBefore[providersBefore.length - 1];

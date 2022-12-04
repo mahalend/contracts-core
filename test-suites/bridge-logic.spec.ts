@@ -1,15 +1,15 @@
-const { expect } = require('chai');
-import { BigNumber, Event, utils } from 'ethers';
-import AaveConfig from '@aave/deploy-v3/dist/markets/test';
-import { waitForTx, advanceTimeAndBlock } from '@aave/deploy-v3';
-import { getACLManager } from '@aave/deploy-v3/dist/helpers/contract-getters';
-import { ReserveData, UserReserveData } from './helpers/utils/interfaces';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { MAX_UINT_AMOUNT, MAX_UNBACKED_MINT_CAP } from '../helpers/constants';
-import { ACLManager } from '../types';
-import { TestEnv, makeSuite } from './helpers/make-suite';
-import { getReserveData } from './helpers/utils/helpers';
-import { getTxCostAndTimestamp } from './helpers/actions';
+const {expect} = require('chai');
+import {BigNumber, Event, utils} from 'ethers';
+import AaveConfig from '@mahalend/deploy-v3/dist/markets/test';
+import {waitForTx, advanceTimeAndBlock} from '@mahalend/deploy-v3';
+import {getACLManager} from '@mahalend/deploy-v3/dist/helpers/contract-getters';
+import {ReserveData, UserReserveData} from './helpers/utils/interfaces';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {MAX_UINT_AMOUNT, MAX_UNBACKED_MINT_CAP} from '../helpers/constants';
+import {ACLManager} from '../types';
+import {TestEnv, makeSuite} from './helpers/make-suite';
+import {getReserveData} from './helpers/utils/helpers';
+import {getTxCostAndTimestamp} from './helpers/actions';
 import {
   calcExpectedReserveDataAfterMintUnbacked,
   calcExpectedReserveDataAfterBackUnbacked,
@@ -25,7 +25,7 @@ const expectEqual = (
 };
 
 makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
-  const { INVALID_AMOUNT, CALLER_NOT_BRIDGE, UNBACKED_MINT_CAP_EXCEEDED } = ProtocolErrors;
+  const {INVALID_AMOUNT, CALLER_NOT_BRIDGE, UNBACKED_MINT_CAP_EXCEEDED} = ProtocolErrors;
 
   const depositAmount = utils.parseEther('1000');
   const borrowAmount = utils.parseEther('200');
@@ -42,7 +42,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   before(async () => {
     calculationsConfiguration.reservesParams = AaveConfig.ReservesConfig;
 
-    const { users, poolAdmin, configurator } = testEnv;
+    const {users, poolAdmin, configurator} = testEnv;
 
     aclManager = await getACLManager();
 
@@ -55,7 +55,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('User 0 deposit 1000 dai.', async () => {
-    const { users, pool, dai } = testEnv;
+    const {users, pool, dai} = testEnv;
     await waitForTx(await dai.connect(users[0].signer)['mint(uint256)'](depositAmount));
     await waitForTx(await dai.connect(users[0].signer).approve(pool.address, MAX_UINT_AMOUNT));
     await waitForTx(
@@ -64,8 +64,8 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('User 1 deposit 2 eth', async () => {
-    const { users, pool, weth } = testEnv;
-    await waitForTx(await weth.connect(users[1].signer).deposit({ value: utils.parseEther('2') }));
+    const {users, pool, weth} = testEnv;
+    await waitForTx(await weth.connect(users[1].signer).deposit({value: utils.parseEther('2')}));
     await waitForTx(await weth.connect(users[1].signer).approve(pool.address, MAX_UINT_AMOUNT));
     await waitForTx(
       await pool
@@ -75,7 +75,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('User 1 borrows 200 dai with variable debt', async () => {
-    const { users, pool, dai } = testEnv;
+    const {users, pool, dai} = testEnv;
     await waitForTx(
       await pool
         .connect(users[1].signer)
@@ -84,7 +84,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('User 1 borrows 200 dai with stable debt', async () => {
-    const { users, pool, dai } = testEnv;
+    const {users, pool, dai} = testEnv;
     await waitForTx(
       await pool
         .connect(users[1].signer)
@@ -93,14 +93,14 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('User 1 tries to perform fast withdraw 100 aDai from L2 (revert expected)', async () => {
-    const { users, pool, dai } = testEnv;
+    const {users, pool, dai} = testEnv;
     await expect(
       pool.connect(users[1].signer).mintUnbacked(dai.address, mintAmount, users[0].address, 0)
     ).to.be.revertedWith(CALLER_NOT_BRIDGE);
   });
 
   it('User 2 tries to perform fast withdraw from L2 with no unbackedMintCap (revert expected)', async () => {
-    const { users, pool, dai } = testEnv;
+    const {users, pool, dai} = testEnv;
     // fast withdraw a100 DAI
     await expect(
       pool.connect(users[2].signer).mintUnbacked(dai.address, mintAmount, users[0].address, 0)
@@ -113,7 +113,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('RiskAdmin updates the unbackedMintCap to 10 aDai (10 left) and user 1 tries to perform fast withdraw 100 aDai from L2 (revert expected)', async () => {
-    const { users, riskAdmin, pool, configurator, dai } = testEnv;
+    const {users, riskAdmin, pool, configurator, dai} = testEnv;
     expect(await configurator.connect(riskAdmin.signer).setUnbackedMintCap(dai.address, '10'));
     await expect(
       pool.connect(users[2].signer).mintUnbacked(dai.address, mintAmount, users[0].address, 0)
@@ -127,12 +127,12 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('User 2 perform fast withdraw 100 aDai from L2', async () => {
-    const { users, pool, dai, helpersContract } = testEnv;
+    const {users, pool, dai, helpersContract} = testEnv;
     const reserveDataBefore = await getReserveData(helpersContract, dai.address);
     const tx = await waitForTx(
       await pool.connect(users[2].signer).mintUnbacked(dai.address, mintAmount, users[2].address, 0)
     );
-    const { txTimestamp } = await getTxCostAndTimestamp(tx);
+    const {txTimestamp} = await getTxCostAndTimestamp(tx);
     const expectedDataAfter = calcExpectedReserveDataAfterMintUnbacked(
       mintAmount.toString(),
       reserveDataBefore,
@@ -143,7 +143,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('RiskAdmin updates the unbackedMintCap to 100 aDai (0 left) and user 1 tries to perform fast withdraw 1 aDai from L2 (revert expected)', async () => {
-    const { users, riskAdmin, pool, configurator, dai } = testEnv;
+    const {users, riskAdmin, pool, configurator, dai} = testEnv;
     expect(await configurator.connect(riskAdmin.signer).setUnbackedMintCap(dai.address, '100'));
     await expect(
       pool.connect(users[2].signer).mintUnbacked(dai.address, mintAmount, users[0].address, 0)
@@ -157,12 +157,12 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('User 2 perform another fast withdraw 100 aDai from L2', async () => {
-    const { users, pool, dai, helpersContract } = testEnv;
+    const {users, pool, dai, helpersContract} = testEnv;
     const reserveDataBefore = await getReserveData(helpersContract, dai.address);
     const tx = await waitForTx(
       await pool.connect(users[2].signer).mintUnbacked(dai.address, mintAmount, users[2].address, 0)
     );
-    const { txTimestamp } = await getTxCostAndTimestamp(tx);
+    const {txTimestamp} = await getTxCostAndTimestamp(tx);
     const reserveDataAfter = await getReserveData(helpersContract, dai.address);
     const expectedDataAfter = calcExpectedReserveDataAfterMintUnbacked(
       mintAmount.toString(),
@@ -177,12 +177,12 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('User 2 perform invalid fast withdraw 100 aDai from L2', async () => {
-    const { users, pool, dai, helpersContract } = testEnv;
+    const {users, pool, dai, helpersContract} = testEnv;
     const reserveDataBefore = await getReserveData(helpersContract, dai.address);
     const tx = await waitForTx(
       await pool.connect(users[2].signer).mintUnbacked(dai.address, mintAmount, users[2].address, 0)
     );
-    const { txTimestamp } = await getTxCostAndTimestamp(tx);
+    const {txTimestamp} = await getTxCostAndTimestamp(tx);
     const reserveDataAfter = await getReserveData(helpersContract, dai.address);
     const expectedDataAfter = calcExpectedReserveDataAfterMintUnbacked(
       mintAmount.toString(),
@@ -198,7 +198,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
 
   it('100 bridged dai used to back unbacked', async () => {
     // Let user 3 be bridge for now
-    const { users, pool, dai, aDai, helpersContract } = testEnv;
+    const {users, pool, dai, aDai, helpersContract} = testEnv;
     await waitForTx(await dai.connect(users[3].signer)['mint(uint256)'](withdrawAmount));
     await waitForTx(await dai.connect(users[3].signer).approve(pool.address, MAX_UINT_AMOUNT));
 
@@ -208,7 +208,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
       await pool.connect(users[3].signer).backUnbacked(dai.address, mintAmount, feeAmount)
     );
 
-    const { txTimestamp } = await getTxCostAndTimestamp(tx);
+    const {txTimestamp} = await getTxCostAndTimestamp(tx);
 
     const reserveDataAfter = await getReserveData(helpersContract, dai.address);
 
@@ -225,7 +225,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
 
     // Check event values for `ReserveDataUpdated`
     const reserveDataUpdatedEvent = tx.events?.find(
-      ({ event }) => event === 'ReserveDataUpdated'
+      ({event}) => event === 'ReserveDataUpdated'
     ) as Event;
     if (reserveDataUpdatedEvent) {
       const {
@@ -246,7 +246,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
   });
 
   it('user 1 performs unauthorized backing', async () => {
-    const { users, pool, dai } = testEnv;
+    const {users, pool, dai} = testEnv;
     await dai.connect(users[1].signer)['mint(uint256)'](withdrawAmount);
     await dai.connect(users[1].signer).approve(pool.address, MAX_UINT_AMOUNT);
 
@@ -257,7 +257,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
 
   it('100 bridged dai used to back unbacked', async () => {
     // Let user 3 be bridge for now
-    const { users, pool, dai, aDai, helpersContract } = testEnv;
+    const {users, pool, dai, aDai, helpersContract} = testEnv;
     await dai.connect(users[3].signer)['mint(uint256)'](withdrawAmount);
     await dai.connect(users[3].signer).approve(pool.address, MAX_UINT_AMOUNT);
 
@@ -267,7 +267,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
       await pool.connect(users[3].signer).backUnbacked(dai.address, mintAmount, feeAmount)
     );
 
-    const { txTimestamp } = await getTxCostAndTimestamp(tx);
+    const {txTimestamp} = await getTxCostAndTimestamp(tx);
 
     const reserveDataAfter = await getReserveData(helpersContract, dai.address);
 
@@ -285,7 +285,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
 
   it('User donates 100 dai to aDai holders', async () => {
     // Let user 3 be bridge for now
-    const { users, pool, dai, aDai, helpersContract } = testEnv;
+    const {users, pool, dai, aDai, helpersContract} = testEnv;
     await dai.connect(users[3].signer)['mint(uint256)'](withdrawAmount);
     await dai.connect(users[3].signer).approve(pool.address, MAX_UINT_AMOUNT);
 
@@ -295,7 +295,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
       await pool.connect(users[3].signer).backUnbacked(dai.address, '0', withdrawAmount)
     );
 
-    const { txTimestamp } = await getTxCostAndTimestamp(tx);
+    const {txTimestamp} = await getTxCostAndTimestamp(tx);
     const reserveDataAfter = await getReserveData(helpersContract, dai.address);
 
     const expectedReserveDataAfter = calcExpectedReserveDataAfterBackUnbacked(
@@ -315,7 +315,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
 
   it('Safety module cover 100 unbacked dai', async () => {
     // Let user 3 be bridge for now
-    const { users, pool, dai, aDai, helpersContract } = testEnv;
+    const {users, pool, dai, aDai, helpersContract} = testEnv;
     await dai.connect(users[3].signer)['mint(uint256)'](withdrawAmount);
     await dai.connect(users[3].signer).approve(pool.address, MAX_UINT_AMOUNT);
 
@@ -325,7 +325,7 @@ makeSuite('BridgeLogic: Testing with borrows', (testEnv: TestEnv) => {
       await pool.connect(users[3].signer).backUnbacked(dai.address, mintAmount, '0')
     );
 
-    const { txTimestamp } = await getTxCostAndTimestamp(tx);
+    const {txTimestamp} = await getTxCostAndTimestamp(tx);
     const reserveDataAfter = await getReserveData(helpersContract, dai.address);
 
     const expectedReserveDataAfter = calcExpectedReserveDataAfterBackUnbacked(

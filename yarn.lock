@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@aave/deploy-v3@git+https://github.com/mahalend/contracts-deploy.git#8e13038d7626bc1d04e654acb27a593fc0ca90aa":
-  version "1.50.3"
-  resolved "git+https://github.com/mahalend/contracts-deploy.git#8e13038d7626bc1d04e654acb27a593fc0ca90aa"
-  dependencies:
-    defender-relay-client "^1.11.1"
-
 "@babel/code-frame@^7.0.0":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.18.6.tgz#3b25d38c89600baa2dcc219edfa88a74eb2c427a"
@@ -878,10 +872,17 @@
     axios-curlirize "^1.3.7"
     tmp-promise "^3.0.2"
 
-"@mahalend/periphery-v3@3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@mahalend/periphery-v3/-/periphery-v3-3.2.3.tgz#88165b6f4e4adedd8defd6bef5cd9c82382945ee"
-  integrity sha512-/qLS/+3QdRK4IqbdHMxwQFsuXr6ZbCHwiltUIpQW7+uc53S5BF8rVnVM61n/XPRKfTpUVwvjtR2Fe8mMwZfjRw==
+"@mahalend/deploy-v3@1.50.3":
+  version "1.50.2"
+  resolved "https://registry.yarnpkg.com/@mahalend/deploy-v3/-/deploy-v3-1.50.2.tgz#cb8e986173451ecb8c8d0ee81b177ea3a8947ab4"
+  integrity sha512-/lTHC/nnknw5/+AbFuASp0aasRZ6h1n0OAZ6CgJKxFkKi1DveQdRQKRYx7WMDqSaQeRvUFiU/caHwdbNLAkwBw==
+  dependencies:
+    defender-relay-client "^1.11.1"
+
+"@mahalend/periphery-v3@3.2.5":
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/@mahalend/periphery-v3/-/periphery-v3-3.2.5.tgz#7ae8c9ca29a4cc48df5778170bfc8ff8b872f68f"
+  integrity sha512-2VhCNsUSEDhqxFY992y/oqt84cZ450uqrAzKwHXLhVH4UiZRGYI29S5zIUmr8dzcBvQC2lFaXAHt4/fI6bRBRg==
   dependencies:
     "@mahalend/core-v3" "git+https://github.com/mahalend/v3-core.git"
 

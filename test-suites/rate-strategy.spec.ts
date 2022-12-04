@@ -1,13 +1,13 @@
-import { expect } from 'chai';
-import { BigNumber, BigNumberish, utils } from 'ethers';
-import { deployDefaultReserveInterestRateStrategy } from '@aave/deploy-v3/dist/helpers/contract-deployments';
-import { PERCENTAGE_FACTOR } from '../helpers/constants';
-import { AToken, DefaultReserveInterestRateStrategy, MintableERC20 } from '../types';
-import { strategyDAI } from '@aave/deploy-v3/dist/markets/test/reservesConfigs';
-import { rateStrategyStableTwo } from '@aave/deploy-v3/dist/markets/test/rateStrategies';
-import { TestEnv, makeSuite } from './helpers/make-suite';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { formatUnits } from '@ethersproject/units';
+import {expect} from 'chai';
+import {BigNumber, BigNumberish, utils} from 'ethers';
+import {deployDefaultReserveInterestRateStrategy} from '@mahalend/deploy-v3/dist/helpers/contract-deployments';
+import {PERCENTAGE_FACTOR} from '../helpers/constants';
+import {AToken, DefaultReserveInterestRateStrategy, MintableERC20} from '../types';
+import {strategyDAI} from '@mahalend/deploy-v3/dist/markets/test/reservesConfigs';
+import {rateStrategyStableTwo} from '@mahalend/deploy-v3/dist/markets/test/rateStrategies';
+import {TestEnv, makeSuite} from './helpers/make-suite';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {formatUnits} from '@ethersproject/units';
 import './helpers/utils/wadraymath';
 
 const DEBUG = false;
@@ -32,14 +32,13 @@ makeSuite('InterestRateStrategy', (testEnv: TestEnv) => {
     rateStrategyStableTwo.baseStableRateOffset
   );
 
-  const { INVALID_OPTIMAL_USAGE_RATIO, INVALID_OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO } =
-    ProtocolErrors;
+  const {INVALID_OPTIMAL_USAGE_RATIO, INVALID_OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO} = ProtocolErrors;
 
   before(async () => {
     dai = testEnv.dai;
     aDai = testEnv.aDai;
 
-    const { addressesProvider } = testEnv;
+    const {addressesProvider} = testEnv;
 
     strategyInstance = await deployDefaultReserveInterestRateStrategy([
       addressesProvider.address,
@@ -388,7 +387,7 @@ makeSuite('InterestRateStrategy', (testEnv: TestEnv) => {
   });
 
   it('Deploy an interest rate strategy with optimalUsageRatio out of range (expect revert)', async () => {
-    const { addressesProvider } = testEnv;
+    const {addressesProvider} = testEnv;
 
     await expect(
       deployDefaultReserveInterestRateStrategy([
@@ -407,7 +406,7 @@ makeSuite('InterestRateStrategy', (testEnv: TestEnv) => {
   });
 
   it('Deploy an interest rate strategy with optimalStableToTotalDebtRatio out of range (expect revert)', async () => {
-    const { addressesProvider } = testEnv;
+    const {addressesProvider} = testEnv;
     await expect(
       deployDefaultReserveInterestRateStrategy([
         addressesProvider.address,

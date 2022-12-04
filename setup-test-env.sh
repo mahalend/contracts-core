@@ -2,7 +2,7 @@
 
 # @dev
 # This bash script setups the needed artifacts to use
-# the @aave/deploy-v3 package as source of deployment
+# the @mahalend/deploy-v3 package as source of deployment
 # scripts for testing or coverage purposes.
 #
 # A separate  artifacts directory was created
@@ -34,7 +34,7 @@ cp -r node_modules/@mahalend/periphery-v3/artifacts/contracts/* temp-artifacts/p
 
 # Import external @aave/deploy artifacts
 mkdir -p temp-artifacts/deploy
-cp -r node_modules/@aave/deploy-v3/artifacts/contracts/* temp-artifacts/deploy
+cp -r node_modules/@mahalend/deploy-v3/artifacts/contracts/* temp-artifacts/deploy
 
 # Export MARKET_NAME variable to use Aave market as testnet deployment setup
 export MARKET_NAME="Test"

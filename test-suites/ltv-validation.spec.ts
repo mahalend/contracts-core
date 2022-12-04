@@ -1,13 +1,13 @@
-import { expect } from 'chai';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { MAX_UINT_AMOUNT } from '../helpers/constants';
-import { TestEnv, makeSuite } from './helpers/make-suite';
-import { evmRevert, evmSnapshot } from '@aave/deploy-v3';
-import { parseUnits } from 'ethers/lib/utils';
+import {expect} from 'chai';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {MAX_UINT_AMOUNT} from '../helpers/constants';
+import {TestEnv, makeSuite} from './helpers/make-suite';
+import {evmRevert, evmSnapshot} from '@mahalend/deploy-v3';
+import {parseUnits} from 'ethers/lib/utils';
 
 makeSuite('LTV validation', (testEnv: TestEnv) => {
-  const { LTV_VALIDATION_FAILED } = ProtocolErrors;
+  const {LTV_VALIDATION_FAILED} = ProtocolErrors;
 
   let snap: string;
   before(async () => {

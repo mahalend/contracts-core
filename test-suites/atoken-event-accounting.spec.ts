@@ -1,10 +1,10 @@
-import { waitForTx, increaseTime, ZERO_ADDRESS } from '@aave/deploy-v3';
-import { expect } from 'chai';
-import { BigNumber, utils } from 'ethers';
-import { MAX_UINT_AMOUNT } from '../helpers/constants';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { RateMode } from '../helpers/types';
-import { makeSuite } from './helpers/make-suite';
+import {waitForTx, increaseTime, ZERO_ADDRESS} from '@mahalend/deploy-v3';
+import {expect} from 'chai';
+import {BigNumber, utils} from 'ethers';
+import {MAX_UINT_AMOUNT} from '../helpers/constants';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {RateMode} from '../helpers/types';
+import {makeSuite} from './helpers/make-suite';
 
 makeSuite('AToken Mint and Burn Event Accounting', (testEnv) => {
   let firstDaiDeposit;
@@ -38,7 +38,7 @@ makeSuite('AToken Mint and Burn Event Accounting', (testEnv) => {
   );
 
   before('User 0 deposits 100 DAI, user 1 deposits 1 WETH, borrows 50 DAI', async () => {
-    const { dai } = testEnv;
+    const {dai} = testEnv;
     firstDaiDeposit = await convertToCurrencyDecimals(dai.address, '10000');
     secondDaiDeposit = await convertToCurrencyDecimals(dai.address, '20000');
     thirdDaiDeposit = await convertToCurrencyDecimals(dai.address, '50000');

@@ -1,9 +1,9 @@
 import fs from 'fs';
-import AaveConfig from '@aave/deploy-v3/dist/markets/test';
-import { configuration as actionsConfiguration } from './helpers/actions';
-import { configuration as calculationsConfiguration } from './helpers/utils/calculations';
-import { makeSuite } from './helpers/make-suite';
-import { executeStory } from './helpers/scenario-engine';
+import AaveConfig from '@mahalend/deploy-v3/dist/markets/test';
+import {configuration as actionsConfiguration} from './helpers/actions';
+import {configuration as calculationsConfiguration} from './helpers/utils/calculations';
+import {makeSuite} from './helpers/make-suite';
+import {executeStory} from './helpers/scenario-engine';
 
 const scenarioFolder = './test-suites/helpers/scenarios/';
 

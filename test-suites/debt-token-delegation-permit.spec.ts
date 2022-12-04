@@ -1,17 +1,17 @@
-import { evmSnapshot, evmRevert } from '@aave/deploy-v3';
-import { expect } from 'chai';
-import { BigNumber, utils } from 'ethers';
-import { HARDHAT_CHAINID, MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
+import {evmSnapshot, evmRevert} from '@mahalend/deploy-v3';
+import {expect} from 'chai';
+import {BigNumber, utils} from 'ethers';
+import {HARDHAT_CHAINID, MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';
 import {
   buildDelegationWithSigParams,
   convertToCurrencyDecimals,
   getSignatureFromTypedData,
 } from '../helpers/contracts-helpers';
-import { timeLatest } from '../helpers/misc-utils';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { getTestWallets } from './helpers/utils/wallets';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { ProtocolErrors } from '../helpers/types';
+import {timeLatest} from '../helpers/misc-utils';
+import {makeSuite, TestEnv} from './helpers/make-suite';
+import {getTestWallets} from './helpers/utils/wallets';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
+import {ProtocolErrors} from '../helpers/types';
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -57,7 +57,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
   });
 
   it('Checks the domain separator', async () => {
-    const { variableDebtDai, stableDebtDai } = testEnv;
+    const {variableDebtDai, stableDebtDai} = testEnv;
     const variableSeparator = await variableDebtDai.DOMAIN_SEPARATOR();
     const stableSeparator = await stableDebtDai.DOMAIN_SEPARATOR();
 
@@ -112,7 +112,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
       (await variableDebtDai.borrowAllowance(user2.address, user3.address)).toString()
     ).to.be.equal('0');
 
-    const { v, r, s } = getSignatureFromTypedData(user2PrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(user2PrivateKey, msgParams);
 
     expect(
       await variableDebtDai
@@ -159,7 +159,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
       (await stableDebtDai.borrowAllowance(user2.address, user3.address)).toString()
     ).to.be.equal('0');
 
-    const { v, r, s } = getSignatureFromTypedData(user2PrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(user2PrivateKey, msgParams);
 
     expect(
       await stableDebtDai
@@ -208,7 +208,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
       (await stableDebtDai.borrowAllowance(user2.address, user3.address)).toString()
     ).to.be.equal('0');
 
-    const { v, r, s } = getSignatureFromTypedData(user2PrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(user2PrivateKey, msgParams);
 
     await expect(
       stableDebtDai
@@ -248,7 +248,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
       (await stableDebtDai.borrowAllowance(user2.address, user3.address)).toString()
     ).to.be.equal('0');
 
-    const { v, r, s } = getSignatureFromTypedData(user2PrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(user2PrivateKey, msgParams);
 
     await expect(
       stableDebtDai
@@ -289,7 +289,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
       (await stableDebtDai.borrowAllowance(user2.address, user3.address)).toString()
     ).to.be.equal('0');
 
-    const { v, r, s } = getSignatureFromTypedData(user2PrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(user2PrivateKey, msgParams);
 
     await expect(
       stableDebtDai
@@ -329,7 +329,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
       (await variableDebtDai.borrowAllowance(user2.address, user3.address)).toString()
     ).to.be.equal('0');
 
-    const { v, r, s } = getSignatureFromTypedData(user2PrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(user2PrivateKey, msgParams);
 
     await expect(
       variableDebtDai
@@ -369,7 +369,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
       (await variableDebtDai.borrowAllowance(user2.address, user3.address)).toString()
     ).to.be.equal('0');
 
-    const { v, r, s } = getSignatureFromTypedData(user2PrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(user2PrivateKey, msgParams);
 
     await expect(
       variableDebtDai
@@ -409,7 +409,7 @@ makeSuite('DebtToken: Permit Delegation', (testEnv: TestEnv) => {
       (await variableDebtDai.borrowAllowance(user2.address, user3.address)).toString()
     ).to.be.equal('0');
 
-    const { v, r, s } = getSignatureFromTypedData(user2PrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(user2PrivateKey, msgParams);
 
     await expect(
       variableDebtDai

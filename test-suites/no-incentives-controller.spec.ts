@@ -1,7 +1,7 @@
-import { expect } from 'chai';
-import { BigNumberish } from 'ethers';
-import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
-import { RateMode } from '../helpers/types';
+import {expect} from 'chai';
+import {BigNumberish} from 'ethers';
+import {MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';
+import {RateMode} from '../helpers/types';
 import {
   AToken__factory,
   ERC20,
@@ -11,11 +11,11 @@ import {
   StableDebtToken__factory,
   VariableDebtToken__factory,
 } from '../types';
-import { getFirstSigner } from '@aave/deploy-v3/dist/helpers/utilities/signer';
-import { makeSuite } from './helpers/make-suite';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { setBlocktime, timeLatest } from '../helpers/misc-utils';
-import { config } from 'process';
+import {getFirstSigner} from '@mahalend/deploy-v3/dist/helpers/utilities/signer';
+import {makeSuite} from './helpers/make-suite';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {setBlocktime, timeLatest} from '../helpers/misc-utils';
+import {config} from 'process';
 
 makeSuite('Reserve Without Incentives Controller', (testEnv) => {
   let mockToken: MintableERC20;
@@ -24,7 +24,7 @@ makeSuite('Reserve Without Incentives Controller', (testEnv) => {
   let mockVariableDebt: ERC20;
 
   before(async () => {
-    const { pool, poolAdmin, configurator, dai, helpersContract } = testEnv;
+    const {pool, poolAdmin, configurator, dai, helpersContract} = testEnv;
 
     mockToken = await new MintableERC20__factory(await getFirstSigner()).deploy(
       'MOCK',
@@ -258,7 +258,7 @@ makeSuite('Reserve Without Incentives Controller', (testEnv) => {
 
     await setBlocktime(time.add(1).toNumber());
 
-    const stableDebtBefore = await mockStableDebt.balanceOf(user.address, { blockTag: 'pending' });
+    const stableDebtBefore = await mockStableDebt.balanceOf(user.address, {blockTag: 'pending'});
 
     await pool
       .connect(user.signer)

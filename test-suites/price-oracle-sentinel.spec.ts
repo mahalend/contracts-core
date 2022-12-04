@@ -1,22 +1,22 @@
-import { expect } from 'chai';
-import { BigNumber, utils } from 'ethers';
-import { timeLatest } from '../helpers/misc-utils';
-import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
-import { ProtocolErrors, RateMode } from '../helpers/types';
+import {expect} from 'chai';
+import {BigNumber, utils} from 'ethers';
+import {timeLatest} from '../helpers/misc-utils';
+import {MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';
+import {ProtocolErrors, RateMode} from '../helpers/types';
 import {
   PriceOracleSentinel,
   PriceOracleSentinel__factory,
   SequencerOracle,
   SequencerOracle__factory,
 } from '../types';
-import { getFirstSigner } from '@aave/deploy-v3/dist/helpers/utilities/signer';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { calcExpectedVariableDebtTokenBalance } from './helpers/utils/calculations';
-import { getReserveData, getUserData } from './helpers/utils/helpers';
+import {getFirstSigner} from '@mahalend/deploy-v3/dist/helpers/utilities/signer';
+import {makeSuite, TestEnv} from './helpers/make-suite';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {calcExpectedVariableDebtTokenBalance} from './helpers/utils/calculations';
+import {getReserveData, getUserData} from './helpers/utils/helpers';
 import './helpers/utils/wadraymath';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { waitForTx, increaseTime } from '@aave/deploy-v3';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
+import {waitForTx, increaseTime} from '@mahalend/deploy-v3';
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -34,7 +34,7 @@ makeSuite('PriceOracleSentinel', (testEnv: TestEnv) => {
   const GRACE_PERIOD = BigNumber.from(60 * 60);
 
   before(async () => {
-    const { addressesProvider, deployer, oracle } = testEnv;
+    const {addressesProvider, deployer, oracle} = testEnv;
 
     // Deploy SequencerOracle
     sequencerOracle = await (
@@ -53,12 +53,12 @@ makeSuite('PriceOracleSentinel', (testEnv: TestEnv) => {
   });
 
   after(async () => {
-    const { aaveOracle, addressesProvider } = testEnv;
+    const {aaveOracle, addressesProvider} = testEnv;
     await waitForTx(await addressesProvider.setPriceOracle(aaveOracle.address));
   });
 
   it('Admin sets a PriceOracleSentinel and activate it for DAI and WETH', async () => {
-    const { addressesProvider, poolAdmin } = testEnv;
+    const {addressesProvider, poolAdmin} = testEnv;
 
     expect(
       await addressesProvider
@@ -76,7 +76,7 @@ makeSuite('PriceOracleSentinel', (testEnv: TestEnv) => {
   });
 
   it('Pooladmin updates grace period for sentinel', async () => {
-    const { poolAdmin } = testEnv;
+    const {poolAdmin} = testEnv;
 
     const newGracePeriod = 0;
 
@@ -88,7 +88,7 @@ makeSuite('PriceOracleSentinel', (testEnv: TestEnv) => {
   });
 
   it('Risk admin updates grace period for sentinel', async () => {
-    const { riskAdmin } = testEnv;
+    const {riskAdmin} = testEnv;
 
     expect(await priceOracleSentinel.getGracePeriod()).to.be.eq(0);
     expect(await priceOracleSentinel.connect(riskAdmin.signer).setGracePeriod(GRACE_PERIOD))
@@ -110,7 +110,7 @@ makeSuite('PriceOracleSentinel', (testEnv: TestEnv) => {
   });
 
   it('Pooladmin update the sequencer oracle', async () => {
-    const { poolAdmin } = testEnv;
+    const {poolAdmin} = testEnv;
 
     const newSequencerOracle = ZERO_ADDRESS;
 

@@ -1,10 +1,10 @@
-import { expect } from 'chai';
-import { BigNumber, Signer, utils } from 'ethers';
-import { impersonateAccountsHardhat } from '../helpers/misc-utils';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { getFirstSigner } from '@aave/deploy-v3/dist/helpers/utilities/signer';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
+import {expect} from 'chai';
+import {BigNumber, Signer, utils} from 'ethers';
+import {impersonateAccountsHardhat} from '../helpers/misc-utils';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {getFirstSigner} from '@mahalend/deploy-v3/dist/helpers/utilities/signer';
+import {makeSuite, TestEnv} from './helpers/make-suite';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
 import {
   evmSnapshot,
   evmRevert,
@@ -12,7 +12,7 @@ import {
   VariableDebtToken__factory,
   increaseTime,
   AaveDistributionManager,
-} from '@aave/deploy-v3';
+} from '@mahalend/deploy-v3';
 import {
   InitializableImmutableAdminUpgradeabilityProxy,
   MockL2Pool__factory,
@@ -20,17 +20,17 @@ import {
   L2Encoder,
   L2Encoder__factory,
 } from '../types';
-import { ethers, getChainId } from 'hardhat';
+import {ethers, getChainId} from 'hardhat';
 import {
   buildPermitParams,
   getProxyImplementation,
   getSignatureFromTypedData,
 } from '../helpers/contracts-helpers';
-import { getTestWallets } from './helpers/utils/wallets';
-import { MAX_UINT_AMOUNT } from '../helpers/constants';
-import { parseUnits } from 'ethers/lib/utils';
-import { getReserveData, getUserData } from './helpers/utils/helpers';
-import { calcExpectedStableDebtTokenBalance } from './helpers/utils/calculations';
+import {getTestWallets} from './helpers/utils/wallets';
+import {MAX_UINT_AMOUNT} from '../helpers/constants';
+import {parseUnits} from 'ethers/lib/utils';
+import {getReserveData, getUserData} from './helpers/utils/helpers';
+import {calcExpectedStableDebtTokenBalance} from './helpers/utils/calculations';
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -56,8 +56,8 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
   let encoder: L2Encoder;
 
   before('Deploying L2Pool', async () => {
-    const { addressesProvider, poolAdmin, pool, deployer, oracle } = testEnv;
-    const { deployer: deployerName } = await hre.getNamedAccounts();
+    const {addressesProvider, poolAdmin, pool, deployer, oracle} = testEnv;
+    const {deployer: deployerName} = await hre.getNamedAccounts();
 
     encoder = await (await new L2Encoder__factory(deployer.signer).deploy(pool.address)).deployed();
 
@@ -95,7 +95,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
   });
 
   after(async () => {
-    const { aaveOracle, addressesProvider } = testEnv;
+    const {aaveOracle, addressesProvider} = testEnv;
     expect(await addressesProvider.setPriceOracle(aaveOracle.address));
   });
 
@@ -123,7 +123,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
   });
 
   it('Supply with permit test', async () => {
-    const { deployer, dai, aDai } = testEnv;
+    const {deployer, dai, aDai} = testEnv;
 
     const chainId = Number(await getChainId());
     const nonce = await dai.nonces(deployer.address);
@@ -142,7 +142,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
       highDeadline,
       amount.toString()
     );
-    const { v, r, s } = getSignatureFromTypedData(userPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(userPrivateKey, msgParams);
 
     await dai.connect(deployer.signer)['mint(uint256)'](amount);
     const referralCode = BigNumber.from(2);
@@ -240,7 +240,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
       deployer.signer
     );
 
-    const { reserveFactor } = await helpersContract.getReserveConfigurationData(usdc.address);
+    const {reserveFactor} = await helpersContract.getReserveConfigurationData(usdc.address);
 
     const [liqRate, sRate, varRate] = await strat.calculateInterestRates({
       unbacked: BigNumber.from(0),
@@ -270,7 +270,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
   });
 
   it('swapBorrowRateMode to stable', async () => {
-    const { deployer, dai, usdc, helpersContract } = testEnv;
+    const {deployer, dai, usdc, helpersContract} = testEnv;
     const currentInterestRateMode = RateMode.Variable;
     const encoded = await encoder.encodeSwapBorrowRateMode(usdc.address, currentInterestRateMode);
     const userDataBefore = await helpersContract.getUserReserveData(usdc.address, deployer.address);
@@ -290,7 +290,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
   it('rebalanceStableBorrowRate (revert expected)', async () => {
     // The test only checks that the value is translated properly, not that the underlying function is run correctly.
     // see other rebalance tests for that
-    const { deployer, usdc } = testEnv;
+    const {deployer, usdc} = testEnv;
     const encoded = await encoder.encodeRebalanceStableBorrowRate(usdc.address, deployer.address);
     await expect(
       l2Pool.connect(deployer.signer)['rebalanceStableBorrowRate(bytes32)'](encoded)
@@ -298,7 +298,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
   });
 
   it('swapBorrowRateMode to variable', async () => {
-    const { deployer, dai, usdc, helpersContract } = testEnv;
+    const {deployer, dai, usdc, helpersContract} = testEnv;
     const currentInterestRateMode = RateMode.Stable;
     const encoded = await encoder.encodeSwapBorrowRateMode(usdc.address, currentInterestRateMode);
     const userDataBefore = await helpersContract.getUserReserveData(usdc.address, deployer.address);
@@ -315,7 +315,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
   });
 
   it('Repay some', async () => {
-    const { deployer, usdc } = testEnv;
+    const {deployer, usdc} = testEnv;
 
     await usdc.connect(deployer.signer).approve(l2Pool.address, MAX_UINT_AMOUNT);
 
@@ -382,7 +382,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
   });
 
   it('Repay remainder with permit', async () => {
-    const { deployer, usdc } = testEnv;
+    const {deployer, usdc} = testEnv;
 
     const data = await l2Pool.getReserveData(usdc.address);
     const vDebtToken = VariableDebtToken__factory.connect(
@@ -409,7 +409,7 @@ makeSuite('Pool: L2 functions', (testEnv: TestEnv) => {
       highDeadline,
       amount.toString()
     );
-    const { v, r, s } = getSignatureFromTypedData(userPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(userPrivateKey, msgParams);
 
     await usdc.connect(deployer.signer)['mint(uint256)'](debtBefore.mul(10));
     await usdc.connect(deployer.signer).approve(l2Pool.address, MAX_UINT_AMOUNT);

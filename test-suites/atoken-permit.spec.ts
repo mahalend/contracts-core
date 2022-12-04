@@ -1,12 +1,12 @@
-import { waitForTx } from '@aave/deploy-v3';
-import { expect } from 'chai';
-import { ethers, utils } from 'ethers';
-import { HARDHAT_CHAINID, MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
-import { buildPermitParams, getSignatureFromTypedData } from '../helpers/contracts-helpers';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { getTestWallets } from './helpers/utils/wallets';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { ProtocolErrors } from '../helpers/types';
+import {waitForTx} from '@mahalend/deploy-v3';
+import {expect} from 'chai';
+import {ethers, utils} from 'ethers';
+import {HARDHAT_CHAINID, MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';
+import {buildPermitParams, getSignatureFromTypedData} from '../helpers/contracts-helpers';
+import {makeSuite, TestEnv} from './helpers/make-suite';
+import {getTestWallets} from './helpers/utils/wallets';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
+import {ProtocolErrors} from '../helpers/types';
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -16,7 +16,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   const EIP712_REVISION = '1';
 
   before(async () => {
-    const { dai, pool, deployer } = testEnv;
+    const {dai, pool, deployer} = testEnv;
 
     testWallets = getTestWallets();
 
@@ -30,7 +30,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   });
 
   it('Checks the domain separator', async () => {
-    const { aDai } = testEnv;
+    const {aDai} = testEnv;
     const separator = await aDai.DOMAIN_SEPARATOR();
 
     const domain = {
@@ -45,7 +45,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   });
 
   it('Tries to submit a permit with 0 expiration (revert expected)', async () => {
-    const { aDai, deployer, users } = testEnv;
+    const {aDai, deployer, users} = testEnv;
     const owner = deployer;
     const spender = users[1];
 
@@ -74,7 +74,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
       'INVALID_ALLOWANCE_BEFORE_PERMIT'
     );
 
-    const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
     await expect(
       aDai
@@ -89,7 +89,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   });
 
   it('Submits a permit with maximum expiration length', async () => {
-    const { aDai, deployer, users } = testEnv;
+    const {aDai, deployer, users} = testEnv;
     const owner = deployer;
     const spender = users[1];
 
@@ -116,7 +116,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
       'INVALID_ALLOWANCE_BEFORE_PERMIT'
     );
 
-    const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
     expect(
       await aDai
@@ -128,7 +128,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   });
 
   it('Cancels the previous permit', async () => {
-    const { aDai, deployer, users } = testEnv;
+    const {aDai, deployer, users} = testEnv;
     const owner = deployer;
     const spender = users[1];
 
@@ -150,7 +150,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
 
     const ownerPrivateKey = testWallets[0].secretKey;
 
-    const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
     expect((await aDai.allowance(owner.address, spender.address)).toString()).to.be.equal(
       ethers.utils.parseEther('2'),
@@ -171,7 +171,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   });
 
   it('Tries to submit a permit with invalid nonce (revert expected)', async () => {
-    const { aDai, deployer, users } = testEnv;
+    const {aDai, deployer, users} = testEnv;
     const owner = deployer;
     const spender = users[1];
 
@@ -193,7 +193,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
 
     const ownerPrivateKey = testWallets[0].secretKey;
 
-    const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
     await expect(
       aDai
@@ -203,7 +203,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   });
 
   it('Tries to submit a permit with invalid expiration (previous to the current block) (revert expected)', async () => {
-    const { aDai, deployer, users } = testEnv;
+    const {aDai, deployer, users} = testEnv;
     const owner = deployer;
     const spender = users[1];
 
@@ -225,7 +225,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
 
     const ownerPrivateKey = testWallets[0].secretKey;
 
-    const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
     await expect(
       aDai
@@ -235,7 +235,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   });
 
   it('Tries to submit a permit with invalid signature (revert expected)', async () => {
-    const { aDai, deployer, users } = testEnv;
+    const {aDai, deployer, users} = testEnv;
     const owner = deployer;
     const spender = users[1];
 
@@ -257,7 +257,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
 
     const ownerPrivateKey = testWallets[0].secretKey;
 
-    const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
     await expect(
       aDai
@@ -267,7 +267,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
   });
 
   it('Tries to submit a permit with invalid owner (revert expected)', async () => {
-    const { aDai, deployer, users } = testEnv;
+    const {aDai, deployer, users} = testEnv;
     const owner = deployer;
     const spender = users[1];
 
@@ -289,7 +289,7 @@ makeSuite('AToken: Permit', (testEnv: TestEnv) => {
 
     const ownerPrivateKey = testWallets[0].secretKey;
 
-    const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
+    const {v, r, s} = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
     await expect(
       aDai

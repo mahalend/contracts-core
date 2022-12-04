@@ -1,13 +1,13 @@
-import { expect } from 'chai';
-import { utils } from 'ethers';
-import { impersonateAccountsHardhat } from '../helpers/misc-utils';
-import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { ProtocolErrors } from '../helpers/types';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { topUpNonPayableWithEther } from './helpers/utils/funds';
-import { evmRevert, evmSnapshot, waitForTx } from '@aave/deploy-v3';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
+import {expect} from 'chai';
+import {utils} from 'ethers';
+import {impersonateAccountsHardhat} from '../helpers/misc-utils';
+import {MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {ProtocolErrors} from '../helpers/types';
+import {makeSuite, TestEnv} from './helpers/make-suite';
+import {topUpNonPayableWithEther} from './helpers/utils/funds';
+import {evmRevert, evmSnapshot, waitForTx} from '@mahalend/deploy-v3';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -20,7 +20,7 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
   } = ProtocolErrors;
 
   it('Check getters', async () => {
-    const { pool, users, dai, aDai } = testEnv;
+    const {pool, users, dai, aDai} = testEnv;
 
     expect(await aDai.decimals()).to.be.eq(await dai.decimals());
     expect(await aDai.UNDERLYING_ASSET_ADDRESS()).to.be.eq(dai.address);
@@ -64,25 +64,25 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
   });
 
   it('approve()', async () => {
-    const { users, aDai } = testEnv;
+    const {users, aDai} = testEnv;
     await aDai.connect(users[0].signer).approve(users[1].address, MAX_UINT_AMOUNT);
     expect(await aDai.allowance(users[0].address, users[1].address)).to.be.eq(MAX_UINT_AMOUNT);
   });
 
   it('approve() with a ZERO_ADDRESS spender', async () => {
-    const { users, aDai } = testEnv;
+    const {users, aDai} = testEnv;
     expect(await aDai.connect(users[0].signer).approve(ZERO_ADDRESS, MAX_UINT_AMOUNT))
       .to.emit(aDai, 'Approval')
       .withArgs(users[0].address, ZERO_ADDRESS, MAX_UINT_AMOUNT);
   });
 
   it('transferFrom()', async () => {
-    const { users, aDai } = testEnv;
+    const {users, aDai} = testEnv;
     await aDai.connect(users[1].signer).transferFrom(users[0].address, users[1].address, 0);
   });
 
   it('increaseAllowance()', async () => {
-    const { users, aDai } = testEnv;
+    const {users, aDai} = testEnv;
     expect(await aDai.allowance(users[1].address, users[0].address)).to.be.eq(0);
     await aDai
       .connect(users[1].signer)
@@ -93,7 +93,7 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
   });
 
   it('decreaseAllowance()', async () => {
-    const { users, aDai } = testEnv;
+    const {users, aDai} = testEnv;
     expect(await aDai.allowance(users[1].address, users[0].address)).to.be.eq(
       await convertToCurrencyDecimals(aDai.address, '1')
     );
@@ -104,21 +104,21 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
   });
 
   it('transfer() with a ZERO_ADDRESS recipient', async () => {
-    const { users, aDai } = testEnv;
+    const {users, aDai} = testEnv;
     expect(await aDai.connect(users[1].signer).transfer(ZERO_ADDRESS, 0))
       .to.emit(aDai, 'Transfer')
       .withArgs(users[1].address, ZERO_ADDRESS, 0);
   });
 
   it('transfer() with a ZERO_ADDRESS origin', async () => {
-    const { users, aDai } = testEnv;
+    const {users, aDai} = testEnv;
     expect(await aDai.connect(users[1].signer).transferFrom(ZERO_ADDRESS, users[1].address, 0))
       .to.emit(aDai, 'Transfer')
       .withArgs(ZERO_ADDRESS, users[1].address, 0);
   });
 
   it('mint() when amountScaled == 0 (revert expected)', async () => {
-    const { deployer, pool, aDai, users } = testEnv;
+    const {deployer, pool, aDai, users} = testEnv;
 
     // Impersonate Pool
     await topUpNonPayableWithEther(deployer.signer, [pool.address], utils.parseEther('1'));
@@ -133,7 +133,7 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
   });
 
   it('mint() to a ZERO_ADDRESS account', async () => {
-    const { deployer, pool, aDai } = testEnv;
+    const {deployer, pool, aDai} = testEnv;
 
     // Impersonate Pool
     await topUpNonPayableWithEther(deployer.signer, [pool.address], utils.parseEther('1'));
@@ -151,7 +151,7 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
   });
 
   it('burn() when amountScaled == 0 (revert expected)', async () => {
-    const { deployer, pool, aDai, users } = testEnv;
+    const {deployer, pool, aDai, users} = testEnv;
 
     // Impersonate Pool
     await topUpNonPayableWithEther(deployer.signer, [pool.address], utils.parseEther('1'));
@@ -166,7 +166,7 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
   });
 
   it('burn() of a ZERO_ADDRESS account (revert expected)', async () => {
-    const { deployer, pool, aDai, users } = testEnv;
+    const {deployer, pool, aDai, users} = testEnv;
 
     // Impersonate Pool
     await topUpNonPayableWithEther(deployer.signer, [pool.address], utils.parseEther('1'));
@@ -184,7 +184,7 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
   });
 
   it('mintToTreasury() with amount == 0', async () => {
-    const { deployer, pool, aDai } = testEnv;
+    const {deployer, pool, aDai} = testEnv;
 
     // Impersonate Pool
     await topUpNonPayableWithEther(deployer.signer, [pool.address], utils.parseEther('1'));
@@ -196,7 +196,7 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
 
   it('setIncentivesController() ', async () => {
     const snapshot = await evmSnapshot();
-    const { deployer, poolAdmin, aWETH, aclManager } = testEnv;
+    const {deployer, poolAdmin, aWETH, aclManager} = testEnv;
 
     expect(await aclManager.connect(deployer.signer).addPoolAdmin(poolAdmin.address));
 
@@ -233,7 +233,7 @@ makeSuite('AToken: Edge cases', (testEnv: TestEnv) => {
 
   it('setIncentivesController() ', async () => {
     const snapshot = await evmSnapshot();
-    const { deployer, poolAdmin, aWETH, aclManager } = testEnv;
+    const {deployer, poolAdmin, aWETH, aclManager} = testEnv;
 
     expect(await aclManager.connect(deployer.signer).addPoolAdmin(poolAdmin.address));
 

@@ -1,14 +1,14 @@
-const { expect } = require('chai');
-import { utils, BigNumber } from 'ethers';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { AAVE_REFERRAL, MAX_UINT_AMOUNT, MAX_UNBACKED_MINT_CAP } from '../helpers/constants';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { TestEnv, makeSuite } from './helpers/make-suite';
+const {expect} = require('chai');
+import {utils, BigNumber} from 'ethers';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {AAVE_REFERRAL, MAX_UINT_AMOUNT, MAX_UNBACKED_MINT_CAP} from '../helpers/constants';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {TestEnv, makeSuite} from './helpers/make-suite';
 import './helpers/utils/wadraymath';
-import { evmSnapshot } from '@aave/deploy-v3';
+import {evmSnapshot} from '@mahalend/deploy-v3';
 
 makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
-  const { SILOED_BORROWING_VIOLATION } = ProtocolErrors;
+  const {SILOED_BORROWING_VIOLATION} = ProtocolErrors;
 
   let snapshot;
 
@@ -17,7 +17,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('Configure DAI as siloed borrowing asset', async () => {
-    const { configurator, helpersContract, dai } = testEnv;
+    const {configurator, helpersContract, dai} = testEnv;
 
     await configurator.setSiloedBorrowing(dai.address, true);
     const siloed = await helpersContract.getSiloedBorrowing(dai.address);
@@ -26,7 +26,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('User 0 supplies DAI, User 1 supplies ETH and USDC, borrows DAI', async () => {
-    const { users, pool, dai, weth, usdc, variableDebtDai } = testEnv;
+    const {users, pool, dai, weth, usdc, variableDebtDai} = testEnv;
 
     const wethSupplyAmount = utils.parseEther('1');
     const daiBorrowAmount = utils.parseEther('10');
@@ -62,7 +62,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('User 0 supplies USDC, User 1 tries to borrow USDC (revert expected)', async () => {
-    const { users, pool, usdc } = testEnv;
+    const {users, pool, usdc} = testEnv;
 
     const usdcBorrowAmount = utils.parseUnits('1', '6');
     const usdcSupplyAmount = utils.parseUnits('1000', '6');
@@ -83,7 +83,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('User 1 repays DAI, borrows USDC', async () => {
-    const { users, pool, usdc, dai } = testEnv;
+    const {users, pool, usdc, dai} = testEnv;
 
     const usdcBorrowAmount = utils.parseUnits('100', '6');
     const daiMintAmount = utils.parseEther('1000');
@@ -100,7 +100,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('User 1 tries to borrow DAI (revert expected)', async () => {
-    const { users, pool, dai } = testEnv;
+    const {users, pool, dai} = testEnv;
 
     const daiBorrowAmount = utils.parseEther('1');
 
@@ -112,7 +112,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('User 1 borrows ETH, tries to borrow DAI (revert expected)', async () => {
-    const { users, pool, dai, weth } = testEnv;
+    const {users, pool, dai, weth} = testEnv;
 
     const wethBorrowAmount = utils.parseEther('0.01');
     const daiBorrowAmount = utils.parseEther('1');
@@ -129,7 +129,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('User 1 Repays USDC and WETH debt, set USDC as siloed', async () => {
-    const { users, pool, usdc, weth, configurator, helpersContract } = testEnv;
+    const {users, pool, usdc, weth, configurator, helpersContract} = testEnv;
 
     const wethMintAmount = utils.parseEther('1');
 
@@ -153,7 +153,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('User 1 borrows DAI, tries to borrow USDC (revert expected)', async () => {
-    const { users, pool, usdc, dai } = testEnv;
+    const {users, pool, usdc, dai} = testEnv;
 
     const daiBorrowAmount = utils.parseEther('1');
     const usdcBorrowAmount = utils.parseUnits('1', '6');
@@ -170,7 +170,7 @@ makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   });
 
   it('User 1 borrows more DAI', async () => {
-    const { users, pool, dai, variableDebtDai } = testEnv;
+    const {users, pool, dai, variableDebtDai} = testEnv;
 
     const daiBorrowAmount = utils.parseEther('1');
 

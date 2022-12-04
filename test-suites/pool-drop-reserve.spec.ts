@@ -1,10 +1,10 @@
-import { expect } from 'chai';
-import { utils } from 'ethers';
-import { ProtocolErrors } from '../helpers/types';
-import { MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../helpers/constants';
-import { MockFlashLoanReceiver } from '../types/MockFlashLoanReceiver';
-import { getMockFlashLoanReceiver } from '@aave/deploy-v3/dist/helpers/contract-getters';
-import { makeSuite, TestEnv } from './helpers/make-suite';
+import {expect} from 'chai';
+import {utils} from 'ethers';
+import {ProtocolErrors} from '../helpers/types';
+import {MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';
+import {MockFlashLoanReceiver} from '../types/MockFlashLoanReceiver';
+import {getMockFlashLoanReceiver} from '@mahalend/deploy-v3/dist/helpers/contract-getters';
+import {makeSuite, TestEnv} from './helpers/make-suite';
 
 makeSuite('Pool: Drop Reserve', (testEnv: TestEnv) => {
   let _mockFlashLoanReceiver = {} as MockFlashLoanReceiver;
@@ -75,7 +75,7 @@ makeSuite('Pool: Drop Reserve', (testEnv: TestEnv) => {
   });
 
   it('User 1 withdraw DAI, drop DAI reserve should succeed', async () => {
-    const { deployer, pool, dai, configurator, helpersContract } = testEnv;
+    const {deployer, pool, dai, configurator, helpersContract} = testEnv;
 
     await pool.withdraw(dai.address, MAX_UINT_AMOUNT, deployer.address);
     const reserveCount = (await pool.getReservesList()).length;
@@ -86,17 +86,17 @@ makeSuite('Pool: Drop Reserve', (testEnv: TestEnv) => {
     expect(tokens.length).to.be.eq(reserveCount - 1);
     expect(tokens.includes(dai.address)).to.be.false;
 
-    const { isActive } = await helpersContract.getReserveConfigurationData(dai.address);
+    const {isActive} = await helpersContract.getReserveConfigurationData(dai.address);
     expect(isActive).to.be.false;
   });
 
   it('Drop an asset that is not a listed reserve should fail', async () => {
-    const { users, configurator } = testEnv;
+    const {users, configurator} = testEnv;
     await expect(configurator.dropReserve(users[5].address)).to.be.revertedWith(ASSET_NOT_LISTED);
   });
 
   it('Drop an asset that is not a listed reserve should fail', async () => {
-    const { users, configurator } = testEnv;
+    const {users, configurator} = testEnv;
     await expect(configurator.dropReserve(ZERO_ADDRESS)).to.be.revertedWith(ZERO_ADDRESS_NOT_VALID);
   });
 });

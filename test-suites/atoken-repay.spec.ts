@@ -5,14 +5,14 @@ import {
   DefaultReserveInterestRateStrategy__factory,
   IStableDebtToken__factory,
   IVariableDebtToken__factory,
-} from '@aave/deploy-v3';
-import { parseUnits } from '@ethersproject/units';
-import { expect } from 'chai';
-import { utils } from 'ethers';
-import { MAX_UINT_AMOUNT } from '../helpers/constants';
-import { setBlocktime, timeLatest } from '../helpers/misc-utils';
-import { RateMode } from '../helpers/types';
-import { TestEnv, makeSuite } from './helpers/make-suite';
+} from '@mahalend/deploy-v3';
+import {parseUnits} from '@ethersproject/units';
+import {expect} from 'chai';
+import {utils} from 'ethers';
+import {MAX_UINT_AMOUNT} from '../helpers/constants';
+import {setBlocktime, timeLatest} from '../helpers/misc-utils';
+import {RateMode} from '../helpers/types';
+import {TestEnv, makeSuite} from './helpers/make-suite';
 import './helpers/utils/wadraymath';
 
 makeSuite('AToken: Repay', (testEnv: TestEnv) => {
@@ -79,8 +79,8 @@ makeSuite('AToken: Repay', (testEnv: TestEnv) => {
 
     await setBlocktime(time.add(1).toNumber());
 
-    const balanceBefore = await aDai.balanceOf(user1.address, { blockTag: 'pending' });
-    const debtBefore = await variableDebtDai.balanceOf(user1.address, { blockTag: 'pending' });
+    const balanceBefore = await aDai.balanceOf(user1.address, {blockTag: 'pending'});
+    const debtBefore = await variableDebtDai.balanceOf(user1.address, {blockTag: 'pending'});
 
     await expect(pool.connect(user1.signer).repayWithATokens(dai.address, repayAmount, 2))
       .to.emit(pool, 'Repay')
@@ -107,10 +107,10 @@ makeSuite('AToken: Repay', (testEnv: TestEnv) => {
     const time = await timeLatest();
     await setBlocktime(time.add(1).toNumber());
 
-    const balanceBefore = await aDai.balanceOf(user1.address, { blockTag: 'pending' });
+    const balanceBefore = await aDai.balanceOf(user1.address, {blockTag: 'pending'});
     expect(balanceBefore).to.be.gt(transferAmount);
 
-    const debtBefore = await variableDebtDai.balanceOf(user1.address, { blockTag: 'pending' });
+    const debtBefore = await variableDebtDai.balanceOf(user1.address, {blockTag: 'pending'});
 
     const tx = await waitForTx(
       await pool.connect(user1.signer).repayWithATokens(dai.address, MAX_UINT_AMOUNT, 2)
@@ -151,8 +151,8 @@ makeSuite('AToken: Repay', (testEnv: TestEnv) => {
     const time = await timeLatest();
     await setBlocktime(time.add(1).toNumber());
 
-    const balanceBefore = await aDai.balanceOf(user1.address, { blockTag: 'pending' });
-    const debtBefore = await variableDebtDai.balanceOf(user1.address, { blockTag: 'pending' });
+    const balanceBefore = await aDai.balanceOf(user1.address, {blockTag: 'pending'});
+    const debtBefore = await variableDebtDai.balanceOf(user1.address, {blockTag: 'pending'});
     expect(debtBefore).to.be.gt(parseUnits('50', 18));
 
     const tx = await waitForTx(

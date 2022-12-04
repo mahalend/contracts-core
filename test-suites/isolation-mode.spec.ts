@@ -1,10 +1,10 @@
-const { expect } = require('chai');
-import { utils, BigNumber } from 'ethers';
-import { ReserveData, UserReserveData } from './helpers/utils/interfaces';
-import { ProtocolErrors, RateMode } from '../helpers/types';
-import { AAVE_REFERRAL, MAX_UINT_AMOUNT, MAX_UNBACKED_MINT_CAP } from '../helpers/constants';
-import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
-import { TestEnv, makeSuite } from './helpers/make-suite';
+const {expect} = require('chai');
+import {utils, BigNumber} from 'ethers';
+import {ReserveData, UserReserveData} from './helpers/utils/interfaces';
+import {ProtocolErrors, RateMode} from '../helpers/types';
+import {AAVE_REFERRAL, MAX_UINT_AMOUNT, MAX_UNBACKED_MINT_CAP} from '../helpers/constants';
+import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
+import {TestEnv, makeSuite} from './helpers/make-suite';
 import './helpers/utils/wadraymath';
 import {
   increaseTime,
@@ -12,11 +12,11 @@ import {
   evmSnapshot,
   evmRevert,
   advanceTimeAndBlock,
-} from '@aave/deploy-v3';
-import { getReserveData, getUserData } from './helpers/utils/helpers';
-import { getTxCostAndTimestamp } from './helpers/actions';
-import AaveConfig from '@aave/deploy-v3/dist/markets/test';
-import { getACLManager } from '@aave/deploy-v3/dist/helpers/contract-getters';
+} from '@mahalend/deploy-v3';
+import {getReserveData, getUserData} from './helpers/utils/helpers';
+import {getTxCostAndTimestamp} from './helpers/actions';
+import AaveConfig from '@mahalend/deploy-v3/dist/markets/test';
+import {getACLManager} from '@mahalend/deploy-v3/dist/helpers/contract-getters';
 import {
   calcExpectedReserveDataAfterMintUnbacked,
   configuration as calculationsConfiguration,
@@ -40,7 +40,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   const mintAmount = withdrawAmount.mul(denominatorBP.sub(feeBps)).div(denominatorBP);
   const bridgeProtocolFeeBps = BigNumber.from(2000);
 
-  const { ASSET_NOT_BORROWABLE_IN_ISOLATION, DEBT_CEILING_EXCEEDED, USER_IN_ISOLATION_MODE } =
+  const {ASSET_NOT_BORROWABLE_IN_ISOLATION, DEBT_CEILING_EXCEEDED, USER_IN_ISOLATION_MODE} =
     ProtocolErrors;
 
   let aclManager;
@@ -48,7 +48,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   let snapshot;
 
   before(async () => {
-    const { configurator, dai, usdc, aave, users, poolAdmin } = testEnv;
+    const {configurator, dai, usdc, aave, users, poolAdmin} = testEnv;
     calculationsConfiguration.reservesParams = AaveConfig.ReservesConfig;
 
     //set debt ceiling for aave
@@ -67,7 +67,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
     );
 
     // configure oracle
-    const { aaveOracle, addressesProvider, oracle } = testEnv;
+    const {aaveOracle, addressesProvider, oracle} = testEnv;
     oracleBaseDecimals = (await aaveOracle.BASE_CURRENCY_UNIT()).toString().length - 1;
     await waitForTx(await addressesProvider.setPriceOracle(oracle.address));
 
@@ -75,14 +75,14 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 0 supply 1000 dai.', async () => {
-    const { users, pool, dai } = testEnv;
+    const {users, pool, dai} = testEnv;
     await dai.connect(users[0].signer)['mint(uint256)'](depositAmount);
     await dai.connect(users[0].signer).approve(pool.address, MAX_UINT_AMOUNT);
     await pool.connect(users[0].signer).supply(dai.address, depositAmount, users[0].address, 0);
   });
 
   it('User 1 supply 2 aave. Checks that aave is activated as collateral ', async () => {
-    const { users, pool, aave, helpersContract } = testEnv;
+    const {users, pool, aave, helpersContract} = testEnv;
     await aave.connect(users[1].signer)['mint(uint256)'](utils.parseEther('2'));
     await aave.connect(users[1].signer).approve(pool.address, MAX_UINT_AMOUNT);
     await pool
@@ -95,7 +95,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 1 supply 1 eth. Checks that eth is NOT activated as collateral ', async () => {
-    const { users, pool, weth, helpersContract } = testEnv;
+    const {users, pool, weth, helpersContract} = testEnv;
     await weth.connect(users[1].signer)['mint(uint256)'](utils.parseEther('1'));
     await weth.connect(users[1].signer).approve(pool.address, MAX_UINT_AMOUNT);
     await pool
@@ -108,7 +108,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 1 tries to use eth as collateral (revert expected)', async () => {
-    const { users, pool, weth, helpersContract } = testEnv;
+    const {users, pool, weth, helpersContract} = testEnv;
 
     const userDataBefore = await helpersContract.getUserReserveData(weth.address, users[1].address);
     expect(userDataBefore.usageAsCollateralEnabled).to.be.eq(false);
@@ -159,7 +159,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 2 (as bridge) mint 100 unbacked dai to user 1. Checks that dai is NOT activated as collateral', async () => {
-    const { users, riskAdmin, pool, configurator, dai, helpersContract } = testEnv;
+    const {users, riskAdmin, pool, configurator, dai, helpersContract} = testEnv;
 
     // configure unbacked cap for dai
     expect(await configurator.connect(riskAdmin.signer).setUnbackedMintCap(dai.address, '10'));
@@ -173,7 +173,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
     const tx = await waitForTx(
       await pool.connect(users[2].signer).mintUnbacked(dai.address, mintAmount, users[1].address, 0)
     );
-    const { txTimestamp } = await getTxCostAndTimestamp(tx);
+    const {txTimestamp} = await getTxCostAndTimestamp(tx);
     const expectedDataAfter = calcExpectedReserveDataAfterMintUnbacked(
       mintAmount.toString(),
       reserveDataBefore,
@@ -187,7 +187,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 2 supply 100 DAI, transfers to user 1. Checks that DAI is NOT activated as collateral for user 1', async () => {
-    const { dai, aDai, users, pool, helpersContract } = testEnv;
+    const {dai, aDai, users, pool, helpersContract} = testEnv;
 
     const amount = utils.parseEther('100');
     await dai.connect(users[2].signer)['mint(uint256)'](amount);
@@ -202,7 +202,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 1 withdraws everything. User supplies WETH then AAVE. Checks AAVE is not enabled as collateral', async () => {
-    const { dai, aave, weth, users, pool, helpersContract } = testEnv;
+    const {dai, aave, weth, users, pool, helpersContract} = testEnv;
 
     await pool
       .connect(users[1].signer)
@@ -226,7 +226,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 2 supplies DAI, transfers to user 1. Checks DAI is enabled as collateral', async () => {
-    const { dai, aDai, users, pool, helpersContract } = testEnv;
+    const {dai, aDai, users, pool, helpersContract} = testEnv;
 
     const amount = utils.parseEther('100');
     await dai.connect(users[2].signer)['mint(uint256)'](amount);
@@ -239,7 +239,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 1 withdraws everything. User 2 supplies ETH, User 1 supplies AAVE, tries to borrow ETH (revert expected)', async () => {
-    const { dai, aave, weth, users, pool } = testEnv;
+    const {dai, aave, weth, users, pool} = testEnv;
 
     await pool
       .connect(users[1].signer)
@@ -271,7 +271,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 2 tries to borrow some ETH on behalf of User 1 (revert expected)', async () => {
-    const { users, pool, dai, weth } = testEnv;
+    const {users, pool, dai, weth} = testEnv;
 
     await expect(
       pool
@@ -287,7 +287,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 1 borrows 10 DAI. Check debt ceiling', async () => {
-    const { dai, aave, users, pool } = testEnv;
+    const {dai, aave, users, pool} = testEnv;
 
     const borrowAmount = utils.parseEther('10');
     await expect(
@@ -302,7 +302,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 3 deposits 100 AAVE, borrows 10 DAI. Check debt ceiling', async () => {
-    const { dai, aave, users, pool } = testEnv;
+    const {dai, aave, users, pool} = testEnv;
 
     const aaveAmount = utils.parseEther('100');
     await aave.connect(users[3].signer)['mint(uint256)'](aaveAmount);
@@ -321,7 +321,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 4 deposits 500 AAVE, tries to borrow past the debt ceiling (revert expected)', async () => {
-    const { dai, aave, users, pool } = testEnv;
+    const {dai, aave, users, pool} = testEnv;
 
     const aaveAmount = utils.parseEther('500');
     await aave.connect(users[3].signer)['mint(uint256)'](aaveAmount);
@@ -335,7 +335,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('Push time forward one year. User 1, User 3 repay debt. Ensure debt ceiling is 0', async () => {
-    const { dai, aave, users, pool } = testEnv;
+    const {dai, aave, users, pool} = testEnv;
 
     await increaseTime(60 * 60 * 24 * 365);
 
@@ -422,7 +422,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 5 supplies weth and dai. User 6 supplies AAVE and transfers to User 5', async () => {
-    const { weth, dai, aave, aAave, users, pool, helpersContract } = testEnv;
+    const {weth, dai, aave, aAave, users, pool, helpersContract} = testEnv;
 
     const wethAmount = utils.parseEther('1');
     await weth.connect(users[5].signer)['mint(uint256)'](wethAmount);
@@ -449,7 +449,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   });
 
   it('User 5s isolation mode asset is liquidated by User 6', async () => {
-    const { weth, dai, aave, aAave, users, pool, helpersContract, oracle } = testEnv;
+    const {weth, dai, aave, aAave, users, pool, helpersContract, oracle} = testEnv;
 
     await evmRevert(snapshot);
     snapshot = await evmSnapshot();
@@ -498,7 +498,7 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
   it('User 1 supplies AAVE and borrows DAI in isolation, AAVE exits isolation. User 1 repay and withdraw. AAVE enters isolation again', async () => {
     await evmRevert(snapshot);
 
-    const { pool, configurator, helpersContract, users, poolAdmin, dai, aave } = testEnv;
+    const {pool, configurator, helpersContract, users, poolAdmin, dai, aave} = testEnv;
 
     // Depositor supplies DAI
     await dai.connect(users[0].signer)['mint(uint256)'](depositAmount);
@@ -514,8 +514,9 @@ makeSuite('Isolation mode', (testEnv: TestEnv) => {
       .supply(aave.address, aaveAmountToSupply, users[1].address, 0);
 
     // User 1 borrows DAI against isolated AAVE
-    const { isolationModeTotalDebt: isolationModeTotalDebtBeforeBorrow } =
-      await pool.getReserveData(aave.address);
+    const {isolationModeTotalDebt: isolationModeTotalDebtBeforeBorrow} = await pool.getReserveData(
+      aave.address
+    );
     const isolationModeTotalDebtAfterBorrow = isolationModeTotalDebtBeforeBorrow.add(1000);
     const daiAmountToBorrow = utils.parseEther('10');
     expect(

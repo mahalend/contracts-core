@@ -1,25 +1,25 @@
 import hre from 'hardhat';
-import { expect } from 'chai';
-import { utils } from 'ethers';
-import { createRandomAddress } from '../helpers/misc-utils';
-import { ProtocolErrors } from '../helpers/types';
-import { ZERO_ADDRESS } from '../helpers/constants';
-import { makeSuite, TestEnv } from './helpers/make-suite';
-import { deployPool, deployMockPool } from '@aave/deploy-v3/dist/helpers/contract-deployments';
+import {expect} from 'chai';
+import {utils} from 'ethers';
+import {createRandomAddress} from '../helpers/misc-utils';
+import {ProtocolErrors} from '../helpers/types';
+import {ZERO_ADDRESS} from '../helpers/constants';
+import {makeSuite, TestEnv} from './helpers/make-suite';
+import {deployPool, deployMockPool} from '@mahalend/deploy-v3/dist/helpers/contract-deployments';
 import {
   evmSnapshot,
   evmRevert,
   getFirstSigner,
   InitializableAdminUpgradeabilityProxy__factory,
-} from '@aave/deploy-v3';
-import { MockPeripheryContractV1__factory, MockPeripheryContractV2__factory } from '../types';
-import { getProxyAdmin, getProxyImplementation } from '../helpers/contracts-helpers';
+} from '@mahalend/deploy-v3';
+import {MockPeripheryContractV1__factory, MockPeripheryContractV2__factory} from '../types';
+import {getProxyAdmin, getProxyImplementation} from '../helpers/contracts-helpers';
 
 makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
-  const { OWNABLE_ONLY_OWNER } = ProtocolErrors;
+  const {OWNABLE_ONLY_OWNER} = ProtocolErrors;
 
   it('Test the onlyOwner accessibility of the PoolAddressesProvider', async () => {
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
     const mockAddress = createRandomAddress();
 
     // Transfer ownership to user 1
@@ -51,7 +51,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   });
 
   it('Owner adds a new address as proxy', async () => {
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
 
     const currentAddressesProviderOwner = users[1];
 
@@ -72,7 +72,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   });
 
   it('Owner adds a new address with no proxy', async () => {
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
 
     const currentAddressesProviderOwner = users[1];
     const mockNonProxiedAddress = createRandomAddress();
@@ -96,7 +96,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   });
 
   it('Owner adds a new address with no proxy and turns it into a proxy', async () => {
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
 
     const currentAddressesProviderOwner = users[1];
     const mockPool = await deployPool();
@@ -145,7 +145,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   });
 
   it('Unregister a proxy address', async () => {
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
 
     const currentAddressesProviderOwner = users[1];
 
@@ -169,7 +169,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   });
 
   it('Owner adds a new address with proxy and turns it into a no proxy', async () => {
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
 
     const currentAddressesProviderOwner = users[1];
     const mockPool = await deployPool();
@@ -217,7 +217,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   });
 
   it('Unregister a no proxy address', async () => {
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
 
     const currentAddressesProviderOwner = users[1];
 
@@ -243,7 +243,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   });
 
   it('Owner registers an existing contract (with proxy) and upgrade it', async () => {
-    const { addressesProvider, users, poolAdmin } = testEnv;
+    const {addressesProvider, users, poolAdmin} = testEnv;
     const proxyAdminOwner = users[0];
 
     const currentAddressesProviderOwner = users[1];
@@ -321,7 +321,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   it('Owner updates the implementation of a proxy which is already initialized', async () => {
     const snapId = await evmSnapshot();
 
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
     const currentAddressesProviderOwner = users[1];
 
     const mockPool = await deployMockPool();
@@ -355,7 +355,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   it('Owner updates the MarketId', async () => {
     const snapId = await evmSnapshot();
 
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
     const currentAddressesProviderOwner = users[1];
 
     const NEW_MARKET_ID = 'NEW_MARKET';
@@ -381,7 +381,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   it('Owner updates the PoolConfigurator', async () => {
     const snapId = await evmSnapshot();
 
-    const { addressesProvider, configurator, users } = testEnv;
+    const {addressesProvider, configurator, users} = testEnv;
     const currentAddressesProviderOwner = users[1];
 
     const newPoolConfiguratorImpl = (await deployMockPool()).address;
@@ -417,7 +417,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   it('Owner updates the PriceOracle', async () => {
     const snapId = await evmSnapshot();
 
-    const { addressesProvider, oracle, users } = testEnv;
+    const {addressesProvider, oracle, users} = testEnv;
     const currentAddressesProviderOwner = users[1];
 
     const newPriceOracleAddress = createRandomAddress();
@@ -443,7 +443,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   it('Owner updates the ACLManager', async () => {
     const snapId = await evmSnapshot();
 
-    const { addressesProvider, users, aclManager } = testEnv;
+    const {addressesProvider, users, aclManager} = testEnv;
     const currentAddressesProviderOwner = users[1];
 
     const newACLManagerAddress = createRandomAddress();
@@ -469,8 +469,8 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   it('Owner updates the ACLAdmin', async () => {
     const snapId = await evmSnapshot();
 
-    const { addressesProvider, users } = testEnv;
-    const { aclAdmin: aclAdminAddress } = await hre.getNamedAccounts();
+    const {addressesProvider, users} = testEnv;
+    const {aclAdmin: aclAdminAddress} = await hre.getNamedAccounts();
     const currentAddressesProviderOwner = users[1];
 
     const newACLAdminAddress = createRandomAddress();
@@ -496,7 +496,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   it('Owner updates the PriceOracleSentinel', async () => {
     const snapId = await evmSnapshot();
 
-    const { addressesProvider, users } = testEnv;
+    const {addressesProvider, users} = testEnv;
     const currentAddressesProviderOwner = users[1];
 
     const newPriceOracleSentinelAddress = createRandomAddress();
@@ -522,7 +522,7 @@ makeSuite('PoolAddressesProvider', (testEnv: TestEnv) => {
   it('Owner updates the DataProvider', async () => {
     const snapId = await evmSnapshot();
 
-    const { addressesProvider, helpersContract, users } = testEnv;
+    const {addressesProvider, helpersContract, users} = testEnv;
     const currentAddressesProviderOwner = users[1];
 
     expect(await addressesProvider.getPoolDataProvider(), helpersContract.address);
