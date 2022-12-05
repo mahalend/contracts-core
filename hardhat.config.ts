@@ -17,10 +17,12 @@ import '@tenderly/hardhat-tenderly';
 import 'solidity-coverage';
 import 'hardhat-contract-sizer';
 import 'hardhat-dependency-compiler';
-import {DEFAULT_NAMED_ACCOUNTS} from '@mahalend/deploy-v3';
+// import {DEFAULT_NAMED_ACCOUNTS} from '@mahalend/deploy-v3';
 
 const DEFAULT_BLOCK_GAS_LIMIT = 12450000;
 const HARDFORK = 'london';
+const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY || '';
+const POLYGONSCAN_KEY = process.env.POLYGONSCAN_KEY || '';
 
 const hardhatConfig: HardhatUserConfig = {
   gasReporter: {
@@ -49,6 +51,12 @@ const hardhatConfig: HardhatUserConfig = {
   mocha: {
     timeout: 0,
     bail: true,
+  },
+  etherscan: {
+    apiKey: {
+      mainnet: ETHERSCAN_KEY,
+      polygon: POLYGONSCAN_KEY,
+    },
   },
   tenderly: {
     project: process.env.TENDERLY_PROJECT || '',
@@ -86,17 +94,26 @@ const hardhatConfig: HardhatUserConfig = {
         count: 20,
       },
     },
-  },
-  namedAccounts: {
-    ...DEFAULT_NAMED_ACCOUNTS,
-  },
-  external: {
-    contracts: [
-      {
-        artifacts: './temp-artifacts',
-        deploy: 'node_modules/@mahalend/deploy-v3/dist/deploy',
+    polygon: {
+      url: 'https://polygon-rpc.com/',
+      accounts: {
+        mnemonic: 'fox sight canyon orphan hotel grow hedgehog build bless august weather swarm',
+        path: "m/44'/60'/0'/0",
+        initialIndex: 0,
+        count: 20,
       },
-    ],
+    },
+  },
+  // namedAccounts: {
+  //   ...DEFAULT_NAMED_ACCOUNTS,
+  // },
+  external: {
+    // contracts: [
+    //   {
+    //     artifacts: './temp-artifacts',
+    //     deploy: 'node_modules/@mahalend/deploy-v3/dist/deploy',
+    //   },
+    // ],
   },
 };
 

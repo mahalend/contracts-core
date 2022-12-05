@@ -32,7 +32,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     ? `https://eth-kovan.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://kovan.infura.io/v3/${INFURA_KEY}`,
   [eEthereumNetwork.polygon]: ALCHEMY_KEY
-    ? `https://eth-ropsten.alchemyapi.io/v2/${ALCHEMY_KEY}`
+    ? `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`
     : `https://ropsten.infura.io/v3/${INFURA_KEY}`,
   [eEthereumNetwork.main]: ALCHEMY_KEY
     ? `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`

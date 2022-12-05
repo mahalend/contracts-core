@@ -2,16 +2,7 @@ import {ZERO_ADDRESS} from '../../helpers/constants';
 import {IAaveConfiguration, eEthereumNetwork} from '../../helpers/types';
 
 import {CommonsConfig} from './commons';
-import {
-  strategyDAI,
-  strategyUSDC,
-  strategyUSDT,
-  strategyAAVE,
-  strategyLINK,
-  strategyWBTC,
-  strategyWETH,
-  strategyEURS,
-} from './reservesConfigs';
+import {strategyDAI, strategyUSDC, strategyARTH, strategyWETH} from './reservesConfigs';
 
 export const AaveConfig: IAaveConfiguration = {
   ...CommonsConfig,
@@ -23,44 +14,26 @@ export const AaveConfig: IAaveConfiguration = {
   ProviderId: 30,
   ReservesConfig: {
     DAI: strategyDAI,
-    LINK: strategyLINK,
+    ARTH: strategyARTH,
     USDC: strategyUSDC,
-    WBTC: strategyWBTC,
     WETH: strategyWETH,
-    USDT: strategyUSDT,
-    AAVE: strategyAAVE,
-    EURS: strategyEURS,
+    WMATIC: strategyWETH,
   },
   ReserveAssets: {
     [eEthereumNetwork.goerli]: {
-      AAVE: ZERO_ADDRESS,
       DAI: ZERO_ADDRESS,
-      LINK: ZERO_ADDRESS,
+      ARTH: ZERO_ADDRESS,
       USDC: ZERO_ADDRESS,
-      WBTC: ZERO_ADDRESS,
       WETH: ZERO_ADDRESS,
-      USDT: ZERO_ADDRESS,
-      EURS: ZERO_ADDRESS,
+      WMATIC: ZERO_ADDRESS,
     },
-    [eEthereumNetwork.coverage]: {
-      AAVE: ZERO_ADDRESS,
-      DAI: ZERO_ADDRESS,
-      LINK: ZERO_ADDRESS,
-      USDC: ZERO_ADDRESS,
-      WBTC: ZERO_ADDRESS,
-      WETH: ZERO_ADDRESS,
-      USDT: ZERO_ADDRESS,
-      EURS: ZERO_ADDRESS,
-    },
+    [eEthereumNetwork.coverage]: {},
     [eEthereumNetwork.polygon]: {
-      AAVE: ZERO_ADDRESS,
-      DAI: ZERO_ADDRESS,
-      LINK: ZERO_ADDRESS,
-      USDC: ZERO_ADDRESS,
-      WBTC: ZERO_ADDRESS,
-      WETH: ZERO_ADDRESS,
-      USDT: ZERO_ADDRESS,
-      EURS: ZERO_ADDRESS,
+      DAI: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
+      ARTH: '0xe52509181feb30eb4979e29ec70d50fd5c44d590',
+      USDC: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+      WETH: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+      WMATIC: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
     },
     [eEthereumNetwork.hardhat]: {
       AAVE: ZERO_ADDRESS,
@@ -73,14 +46,11 @@ export const AaveConfig: IAaveConfiguration = {
       EURS: ZERO_ADDRESS,
     },
     [eEthereumNetwork.main]: {
-      DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-      LINK: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
-      USDC: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-      WBTC: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-      WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-      USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-      AAVE: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
-      EURS: '0xdb25f211ab05b1c97d595516f45794528a807ad8',
+      DAI: ZERO_ADDRESS,
+      ARTH: ZERO_ADDRESS,
+      USDC: ZERO_ADDRESS,
+      WETH: ZERO_ADDRESS,
+      WMATIC: ZERO_ADDRESS,
     },
   },
   StkAaveProxy: {
@@ -88,7 +58,7 @@ export const AaveConfig: IAaveConfiguration = {
     [eEthereumNetwork.goerli]: ZERO_ADDRESS,
     [eEthereumNetwork.hardhat]: ZERO_ADDRESS,
     [eEthereumNetwork.polygon]: ZERO_ADDRESS,
-    [eEthereumNetwork.main]: '0x4da27a545c0c5B758a6BA100e3a049001de870f5',
+    [eEthereumNetwork.main]: ZERO_ADDRESS,
   },
 };
 

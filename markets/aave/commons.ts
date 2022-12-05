@@ -2,11 +2,11 @@ import {ZERO_ADDRESS} from '../../helpers/constants';
 import {ICommonConfiguration, eEthereumNetwork} from '../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
-  MarketId: 'Commons Aave Market',
+  MarketId: 'Commons MahaLend Market',
   ATokenNamePrefix: 'Ethereum',
   StableDebtTokenNamePrefix: 'Ethereum',
   VariableDebtTokenNamePrefix: 'Ethereum',
-  SymbolPrefix: 'Eth',
+  SymbolPrefix: 'ETH',
   ProviderId: 8080,
   OracleQuoteCurrencyAddress: ZERO_ADDRESS,
   OracleQuoteCurrency: 'USD',
@@ -14,15 +14,10 @@ export const CommonsConfig: ICommonConfiguration = {
   WrappedNativeTokenSymbol: 'WETH',
   ChainlinkAggregator: {
     [eEthereumNetwork.main]: {
-      AAVE: '0x547a514d5e3769680Ce22B2361c10Ea13619e8a9',
       DAI: '0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9',
-      LINK: '0x2c1d072e956AFFC0D435Cb7AC38EF18d24d9127c',
+      ARTH: '0x2c1d072e956AFFC0D435Cb7AC38EF18d24d9127c',
       USDC: '0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6',
-      WBTC: '0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c',
       WETH: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-      USDT: '0x3E7d1eAB13ad0104d2750B8863b489D65364e32D',
-      // Note: EUR/USD, not EURS dedicated oracle
-      EURS: '0xb49f677943BC038e9857d61E7d053CaA2C1734C1',
     },
     [eEthereumNetwork.goerli]: {
       AAVE: ZERO_ADDRESS,
@@ -35,14 +30,11 @@ export const CommonsConfig: ICommonConfiguration = {
       EURS: ZERO_ADDRESS,
     },
     [eEthereumNetwork.polygon]: {
-      AAVE: ZERO_ADDRESS,
-      DAI: ZERO_ADDRESS,
-      LINK: ZERO_ADDRESS,
-      USDC: ZERO_ADDRESS,
-      WBTC: ZERO_ADDRESS,
-      WETH: ZERO_ADDRESS,
-      USDT: ZERO_ADDRESS,
-      EURS: ZERO_ADDRESS,
+      DAI: '0x4746DeC9e833A82EC7C2C1356372CcF2cfcD2F3D',
+      ARTH: '0x4746DeC9e833A82EC7C2C1356372CcF2cfcD2F3D',
+      USDC: '0xfE4A8cc5b5B2366C1B58Bea3858e81843581b2F7',
+      WETH: '0xF9680D99D6C9589e2a93a78A04A279e509205945',
+      WMATIC: '0xAB594600376Ec9fD91F8e885dADF0CE036862dE0',
     },
     [eEthereumNetwork.coverage]: {
       AAVE: ZERO_ADDRESS,
