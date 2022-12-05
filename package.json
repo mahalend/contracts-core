@@ -1,6 +1,6 @@
 {
   "name": "@mahalend/core-v3",
-  "version": "1.16.6",
+  "version": "1.17.0",
   "description": "MahaLend core smart contracts",
   "files": [
     "contracts",
