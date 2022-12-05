@@ -76,6 +76,7 @@
   },
   "author": "Aave",
   "contributors": [
+    "Steven Enamakel <enamakel@mahadao.com>",
     "Emilio Frangella <emilio@aave.com>",
     "Miguel Martinez <miguel@aave.com>",
     "Steven Valeri <steven@aave.com>",
@@ -92,7 +93,7 @@
     "tmp-promise": "^3.0.2"
   },
   "keywords": [
-    "aave",
+    "mahalend",
     "protocol",
     "protocol-v3",
     "core-v3",
@@ -101,6 +102,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/mahalend/v3-core"
+    "url": "git://github.com/mahalend/contracts-core"
   }
 }
