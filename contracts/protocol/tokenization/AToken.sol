@@ -25,8 +25,9 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
   using SafeCast for uint256;
   using GPv2SafeERC20 for IERC20;
 
-  bytes32 public constant PERMIT_TYPEHASH =
-    keccak256('Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)');
+  bytes32 public constant PERMIT_TYPEHASH = keccak256(
+    'Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)'
+  );
 
   uint256 public constant ATOKEN_REVISION = 0x1;
 
@@ -34,7 +35,7 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
   address internal _underlyingAsset;
 
   /// @inheritdoc VersionedInitializable
-  function getRevision() internal pure virtual override returns (uint256) {
+  function getRevision() internal virtual override pure returns (uint256) {
     return ATOKEN_REVISION;
   }
 
@@ -43,6 +44,7 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
    * @param pool The address of the Pool contract
    */
   constructor(IPool pool)
+    public
     ScaledBalanceTokenBase(pool, 'ATOKEN_IMPL', 'ATOKEN_IMPL', 0)
     EIP712Base()
   {
@@ -130,16 +132,16 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
   /// @inheritdoc IERC20
   function balanceOf(address user)
     public
-    view
     virtual
     override(IncentivizedERC20, IERC20)
+    view
     returns (uint256)
   {
     return super.balanceOf(user).rayMul(POOL.getReserveNormalizedIncome(_underlyingAsset));
   }
 
   /// @inheritdoc IERC20
-  function totalSupply() public view virtual override(IncentivizedERC20, IERC20) returns (uint256) {
+  function totalSupply() public virtual override(IncentivizedERC20, IERC20) view returns (uint256) {
     uint256 currentSupplyScaled = super.totalSupply();
 
     if (currentSupplyScaled == 0) {
@@ -150,12 +152,12 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
   }
 
   /// @inheritdoc IAToken
-  function RESERVE_TREASURY_ADDRESS() external view override returns (address) {
+  function RESERVE_TREASURY_ADDRESS() external override view returns (address) {
     return _treasury;
   }
 
   /// @inheritdoc IAToken
-  function UNDERLYING_ASSET_ADDRESS() external view override returns (address) {
+  function UNDERLYING_ASSET_ADDRESS() external override view returns (address) {
     return _underlyingAsset;
   }
 
@@ -243,7 +245,7 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
    * @dev Overrides the base function to fully implement IAToken
    * @dev see `IncentivizedERC20.DOMAIN_SEPARATOR()` for more detailed documentation
    */
-  function DOMAIN_SEPARATOR() public view override(IAToken, EIP712Base) returns (bytes32) {
+  function DOMAIN_SEPARATOR() public override(IAToken, EIP712Base) view returns (bytes32) {
     return super.DOMAIN_SEPARATOR();
   }
 
@@ -251,12 +253,12 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
    * @dev Overrides the base function to fully implement IAToken
    * @dev see `IncentivizedERC20.nonces()` for more detailed documentation
    */
-  function nonces(address owner) public view override(IAToken, EIP712Base) returns (uint256) {
+  function nonces(address owner) public override(IAToken, EIP712Base) view returns (uint256) {
     return super.nonces(owner);
   }
 
   /// @inheritdoc EIP712Base
-  function _EIP712BaseId() internal view override returns (string memory) {
+  function _EIP712BaseId() internal override view returns (string memory) {
     return name();
   }
 
@@ -268,5 +270,16 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
   ) external override onlyPoolAdmin {
     require(token != _underlyingAsset, Errors.UNDERLYING_CANNOT_BE_RESCUED);
     IERC20(token).safeTransfer(to, amount);
+  }
+
+  function setTreasury(address treasury) external onlyPoolAdmin {
+    _treasury = treasury;
+  }
+
+  function setIncentiveController(IAaveIncentivesController incentivesController)
+    external
+    onlyPoolAdmin
+  {
+    _incentivesController = incentivesController;
   }
 }
