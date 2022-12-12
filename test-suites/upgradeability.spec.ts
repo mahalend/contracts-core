@@ -10,8 +10,8 @@ import {
   getMockVariableDebtToken,
   getStableDebtToken,
   getVariableDebtToken,
-} from '@mahalend/deploy-v3/dist/helpers/contract-getters';
-import {getFirstSigner} from '@mahalend/deploy-v3/dist/helpers/utilities/signer';
+} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
+import {getFirstSigner} from '@mahalend/deploy-v3/dist/src/helpers/utilities/signer';
 import {
   deployInitializableImmutableAdminUpgradeabilityProxy,
   deployMockAToken,
@@ -21,7 +21,7 @@ import {
   deployMockReentrantInitializableImple,
   deployMockStableDebtToken,
   deployMockVariableDebtToken,
-} from '@mahalend/deploy-v3/dist/helpers/contract-deployments';
+} from '@mahalend/deploy-v3/dist/src/helpers/contract-deployments';
 import {
   InitializableImmutableAdminUpgradeabilityProxy,
   InitializableImmutableAdminUpgradeabilityProxy__factory,

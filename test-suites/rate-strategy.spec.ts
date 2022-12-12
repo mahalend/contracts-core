@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {BigNumber, BigNumberish, utils} from 'ethers';
-import {deployDefaultReserveInterestRateStrategy} from '@mahalend/deploy-v3/dist/helpers/contract-deployments';
+import {deployDefaultReserveInterestRateStrategy} from '@mahalend/deploy-v3/dist/src/helpers/contract-deployments';
 import {PERCENTAGE_FACTOR} from '../helpers/constants';
 import {AToken, DefaultReserveInterestRateStrategy, MintableERC20} from '../types';
 import {strategyDAI} from '@mahalend/deploy-v3/dist/markets/test/reservesConfigs';

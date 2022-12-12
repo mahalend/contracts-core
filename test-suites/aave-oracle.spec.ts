@@ -1,16 +1,11 @@
-import {MOCK_CHAINLINK_AGGREGATORS_PRICES} from '@mahalend/deploy-v3/dist/helpers/constants';
+import {MOCK_CHAINLINK_AGGREGATORS_PRICES} from '@mahalend/deploy-v3/dist/src/helpers/constants';
 import {expect} from 'chai';
 import {oneEther, ONE_ADDRESS, ZERO_ADDRESS} from '../helpers/constants';
 import {ProtocolErrors} from '../helpers/types';
+import {evmRevert, evmSnapshot} from '../helpers/utilities/tx';
+import {MintableERC20, MockAggregator} from '../types';
 import {makeSuite, TestEnv} from './helpers/make-suite';
-import {
-  deployMintableERC20,
-  deployMockAggregator,
-  evmRevert,
-  evmSnapshot,
-  MintableERC20,
-  MockAggregator,
-} from '@mahalend/deploy-v3';
+import {deployMintableERC20, deployMockAggregator} from '@mahalend/deploy-v3';
 
 makeSuite('AaveOracle', (testEnv: TestEnv) => {
   let snap: string;

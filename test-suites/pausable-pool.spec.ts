@@ -8,9 +8,9 @@ import {
   getMockFlashLoanReceiver,
   getMockPool,
   getPoolConfiguratorProxy,
-} from '@mahalend/deploy-v3/dist/helpers/contract-getters';
-import {getFirstSigner} from '@mahalend/deploy-v3/dist/helpers/utilities/signer';
-import {deployMockPool} from '@mahalend/deploy-v3/dist/helpers/contract-deployments';
+} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
+import {getFirstSigner} from '@mahalend/deploy-v3/dist/src/helpers/utilities/signer';
+import {deployMockPool} from '@mahalend/deploy-v3/dist/src/helpers/contract-deployments';
 import {
   ACLManager__factory,
   ConfiguratorLogic__factory,

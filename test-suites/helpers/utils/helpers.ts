@@ -1,18 +1,18 @@
-import { Pool } from '../../../types/Pool';
-import { ReserveData, UserReserveData } from './interfaces';
+import {Pool} from '../../../types/Pool';
+import {ReserveData, UserReserveData} from './interfaces';
 import {
   getMintableERC20,
   getAToken,
   getStableDebtToken,
   getVariableDebtToken,
   getIRStrategy,
-} from '@mahalend/deploy-v3/dist/helpers/contract-getters';
-import { tEthereumAddress } from '../../../helpers/types';
-import { AaveProtocolDataProvider } from '../../../types/AaveProtocolDataProvider';
-import { BigNumber } from 'ethers';
-import { AToken } from '../../../types';
-import { getContract } from '@mahalend/deploy-v3';
-import { expect } from 'chai';
+} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
+import {tEthereumAddress} from '../../../helpers/types';
+import {AaveProtocolDataProvider} from '../../../types/AaveProtocolDataProvider';
+import {BigNumber} from 'ethers';
+import {AToken} from '../../../types';
+import {getContract} from '@mahalend/deploy-v3';
+import {expect} from 'chai';
 
 export const getReserveData = async (
   helper: AaveProtocolDataProvider,
@@ -33,7 +33,7 @@ export const getReserveData = async (
 
   const baseStableRate = await irStrategy.getBaseStableBorrowRate();
 
-  const { 0: principalStableDebt } = await stableDebtToken.getSupplyData();
+  const {0: principalStableDebt} = await stableDebtToken.getSupplyData();
   const totalStableDebtLastUpdated = await stableDebtToken.getTotalSupplyLastUpdated();
 
   const scaledVariableDebt = await variableDebtToken.scaledTotalSupply();

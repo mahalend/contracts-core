@@ -3,7 +3,7 @@ import {utils} from 'ethers';
 import {ProtocolErrors} from '../helpers/types';
 import {makeSuite, TestEnv} from './helpers/make-suite';
 import {evmSnapshot, evmRevert, ONE_ADDRESS} from '@mahalend/deploy-v3';
-import {deployMintableERC20} from '@mahalend/deploy-v3/dist/helpers/contract-deployments';
+import {deployMintableERC20} from '@mahalend/deploy-v3/dist/src/helpers/contract-deployments';
 import {MintableERC20} from '../types';
 
 makeSuite('Rescue tokens', (testEnv: TestEnv) => {

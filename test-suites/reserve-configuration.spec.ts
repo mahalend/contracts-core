@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {BigNumber} from 'ethers';
-import {deployMockReserveConfiguration} from '@mahalend/deploy-v3/dist/helpers/contract-deployments';
+import {deployMockReserveConfiguration} from '@mahalend/deploy-v3/dist/src/helpers/contract-deployments';
 import {ProtocolErrors} from '../helpers/types';
 import {evmSnapshot, evmRevert} from '@mahalend/deploy-v3';
 import {MockReserveConfiguration} from '../types';

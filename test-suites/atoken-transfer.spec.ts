@@ -1,8 +1,8 @@
-import {evmSnapshot, evmRevert} from '@mahalend/deploy-v3';
 import {expect} from 'chai';
 import {MAX_UINT_AMOUNT} from '../helpers/constants';
 import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
 import {RateMode, ProtocolErrors} from '../helpers/types';
+import {evmRevert, evmSnapshot} from '../helpers/utilities/tx';
 import {makeSuite, TestEnv} from './helpers/make-suite';
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {

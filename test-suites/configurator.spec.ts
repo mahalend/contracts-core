@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {utils, BigNumber, BigNumberish} from 'ethers';
 import {strategyWETH} from '@mahalend/deploy-v3/dist/markets/test/reservesConfigs';
-import {getFirstSigner} from '@mahalend/deploy-v3/dist/helpers/utilities/signer';
+import {getFirstSigner} from '@mahalend/deploy-v3/dist/src/helpers/utilities/signer';
 import {MAX_UINT_AMOUNT, ONE_ADDRESS, RAY, ZERO_ADDRESS} from '../helpers/constants';
 import {ProtocolErrors} from '../helpers/types';
 import {

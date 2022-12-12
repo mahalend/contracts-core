@@ -13,33 +13,33 @@ import {
   calcExpectedUserDataAfterSwapRateMode,
   calcExpectedUserDataAfterWithdraw,
 } from './utils/calculations';
-import { getReserveData, getUserData } from './utils/helpers';
-import { buildPermitParams, getSignatureFromTypedData } from '../../helpers/contracts-helpers';
+import {getReserveData, getUserData} from './utils/helpers';
+import {buildPermitParams, getSignatureFromTypedData} from '../../helpers/contracts-helpers';
 
-import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
+import {convertToCurrencyDecimals} from '../../helpers/contracts-helpers';
 import {
   getAToken,
   getMintableERC20,
   getStableDebtToken,
   getVariableDebtToken,
   getTestnetReserveAddressFromSymbol,
-} from '@mahalend/deploy-v3/dist/helpers/contract-getters';
-import { MAX_UINT_AMOUNT, ONE_YEAR } from '../../helpers/constants';
-import { SignerWithAddress, TestEnv } from './make-suite';
+} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
+import {MAX_UINT_AMOUNT, ONE_YEAR} from '../../helpers/constants';
+import {SignerWithAddress, TestEnv} from './make-suite';
 import chai from 'chai';
-import { ReserveData, UserReserveData } from './utils/interfaces';
-import { BigNumber, ContractReceipt, Wallet } from 'ethers';
-import { AToken } from '../../types/AToken';
-import { RateMode, tEthereumAddress } from '../../helpers/types';
-import { MintableERC20__factory } from '../../types';
-import { waitForTx, advanceTimeAndBlock } from '@mahalend/deploy-v3';
-import { getChainId } from 'hardhat';
-import { timeLatest } from '../../helpers/misc-utils';
-import { HardhatRuntimeEnvironment } from 'hardhat/types';
+import {ReserveData, UserReserveData} from './utils/interfaces';
+import {BigNumber, ContractReceipt, Wallet} from 'ethers';
+import {AToken} from '../../types/AToken';
+import {RateMode, tEthereumAddress} from '../../helpers/types';
+import {MintableERC20__factory} from '../../types';
+import {waitForTx, advanceTimeAndBlock} from '@mahalend/deploy-v3';
+import {getChainId} from 'hardhat';
+import {timeLatest} from '../../helpers/misc-utils';
+import {HardhatRuntimeEnvironment} from 'hardhat/types';
 
 declare var hre: HardhatRuntimeEnvironment;
 
-const { expect } = chai;
+const {expect} = chai;
 
 const almostEqualOrEqual = function (
   this: any,
@@ -130,7 +130,7 @@ export const mint = async (reserveSymbol: string, amount: string, user: SignerWi
 };
 
 export const approve = async (reserveSymbol: string, user: SignerWithAddress, testEnv: TestEnv) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
 
   const token = await getMintableERC20(reserve);
@@ -150,7 +150,7 @@ export const deposit = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
 
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
 
@@ -158,7 +158,7 @@ export const deposit = async (
 
   const txOptions: any = {};
 
-  const { reserveData: reserveDataBefore, userData: userDataBefore } = await getContractsData(
+  const {reserveData: reserveDataBefore, userData: userDataBefore} = await getContractsData(
     reserve,
     onBehalfOf,
     testEnv,
@@ -182,7 +182,7 @@ export const deposit = async (
       timestamp,
     } = await getContractsData(reserve, onBehalfOf, testEnv, sender.address);
 
-    const { txCost, txTimestamp } = await getTxCostAndTimestamp(txResult);
+    const {txCost, txTimestamp} = await getTxCostAndTimestamp(txResult);
 
     const expectedReserveData = calcExpectedReserveDataAfterDeposit(
       amountToDeposit.toString(),
@@ -227,7 +227,7 @@ export const withdraw = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
 
   const {
     aTokenInstance,
@@ -255,7 +255,7 @@ export const withdraw = async (
       timestamp,
     } = await getContractsData(reserve, user.address, testEnv);
 
-    const { txCost, txTimestamp } = await getTxCostAndTimestamp(txResult);
+    const {txCost, txTimestamp} = await getTxCostAndTimestamp(txResult);
 
     const expectedReserveData = calcExpectedReserveDataAfterWithdraw(
       amountToWithdraw,
@@ -301,7 +301,7 @@ export const delegateBorrowAllowance = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
 
   const reserveAddress: tEthereumAddress = await getTestnetReserveAddressFromSymbol(reserve);
 
@@ -344,11 +344,11 @@ export const borrow = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool, helpersContract } = testEnv;
+  const {pool, helpersContract} = testEnv;
 
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
 
-  const { reserveData: reserveDataBefore, userData: userDataBefore } = await getContractsData(
+  const {reserveData: reserveDataBefore, userData: userDataBefore} = await getContractsData(
     reserve,
     onBehalfOf,
     testEnv,
@@ -372,7 +372,7 @@ export const borrow = async (
   if (expectedResult === 'success') {
     const txResult = await waitForTx(await tx);
 
-    const { txCost, txTimestamp } = await getTxCostAndTimestamp(txResult);
+    const {txCost, txTimestamp} = await getTxCostAndTimestamp(txResult);
 
     if (timeTravel) {
       const secondsToTravel = BigNumber.from(timeTravel).mul(ONE_YEAR).div(365).toNumber();
@@ -453,10 +453,10 @@ export const repay = async (
   timeTravel: string,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
 
-  const { reserveData: reserveDataBefore, userData: userDataBefore } = await getContractsData(
+  const {reserveData: reserveDataBefore, userData: userDataBefore} = await getContractsData(
     reserve,
     onBehalfOf.address,
     testEnv
@@ -490,7 +490,7 @@ export const repay = async (
         .repay(reserve, amountToRepay, rateMode, onBehalfOf.address, txOptions)
     );
 
-    const { txCost, txTimestamp } = await getTxCostAndTimestamp(txResult);
+    const {txCost, txTimestamp} = await getTxCostAndTimestamp(txResult);
 
     const {
       reserveData: reserveDataAfter,
@@ -553,7 +553,7 @@ export const supplyWithPermit = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
 
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
   const amountToDeposit = await convertToCurrencyDecimals(reserve, amount);
@@ -574,11 +574,11 @@ export const supplyWithPermit = async (
     highDeadline,
     amountToDeposit.toString()
   );
-  const { v, r, s } = getSignatureFromTypedData(senderPk, msgParams);
+  const {v, r, s} = getSignatureFromTypedData(senderPk, msgParams);
 
   const txOptions: any = {};
 
-  const { reserveData: reserveDataBefore, userData: userDataBefore } = await getContractsData(
+  const {reserveData: reserveDataBefore, userData: userDataBefore} = await getContractsData(
     reserve,
     onBehalfOf,
     testEnv,
@@ -612,7 +612,7 @@ export const supplyWithPermit = async (
       timestamp,
     } = await getContractsData(reserve, onBehalfOf, testEnv, sender.address);
 
-    const { txCost, txTimestamp } = await getTxCostAndTimestamp(txResult);
+    const {txCost, txTimestamp} = await getTxCostAndTimestamp(txResult);
 
     const expectedReserveData = calcExpectedReserveDataAfterDeposit(
       amountToDeposit.toString(),
@@ -673,11 +673,11 @@ export const repayWithPermit = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
   const highDeadline = '100000000000000000000000000';
 
-  const { reserveData: reserveDataBefore, userData: userDataBefore } = await getContractsData(
+  const {reserveData: reserveDataBefore, userData: userDataBefore} = await getContractsData(
     reserve,
     onBehalfOf.address,
     testEnv
@@ -707,7 +707,7 @@ export const repayWithPermit = async (
     highDeadline,
     amountToRepay
   );
-  const { v, r, s } = getSignatureFromTypedData(userPk, msgParams);
+  const {v, r, s} = getSignatureFromTypedData(userPk, msgParams);
   const txOptions: any = {};
 
   if (sendValue) {
@@ -732,7 +732,7 @@ export const repayWithPermit = async (
         )
     );
 
-    const { txCost, txTimestamp } = await getTxCostAndTimestamp(txResult);
+    const {txCost, txTimestamp} = await getTxCostAndTimestamp(txResult);
 
     const {
       reserveData: reserveDataAfter,
@@ -801,11 +801,11 @@ export const setUseAsCollateral = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
 
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
 
-  const { reserveData: reserveDataBefore, userData: userDataBefore } = await getContractsData(
+  const {reserveData: reserveDataBefore, userData: userDataBefore} = await getContractsData(
     reserve,
     user.address,
     testEnv
@@ -818,9 +818,9 @@ export const setUseAsCollateral = async (
       await pool.connect(user.signer).setUserUseReserveAsCollateral(reserve, useAsCollateralBool)
     );
 
-    const { txCost } = await getTxCostAndTimestamp(txResult);
+    const {txCost} = await getTxCostAndTimestamp(txResult);
 
-    const { userData: userDataAfter } = await getContractsData(reserve, user.address, testEnv);
+    const {userData: userDataAfter} = await getContractsData(reserve, user.address, testEnv);
 
     const expectedUserData = calcExpectedUserDataAfterSetUseAsCollateral(
       useAsCollateral.toLocaleLowerCase() === 'true',
@@ -857,11 +857,11 @@ export const swapBorrowRateMode = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
 
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
 
-  const { reserveData: reserveDataBefore, userData: userDataBefore } = await getContractsData(
+  const {reserveData: reserveDataBefore, userData: userDataBefore} = await getContractsData(
     reserve,
     user.address,
     testEnv
@@ -872,9 +872,9 @@ export const swapBorrowRateMode = async (
       await pool.connect(user.signer).swapBorrowRateMode(reserve, rateMode)
     );
 
-    const { txCost, txTimestamp } = await getTxCostAndTimestamp(txResult);
+    const {txCost, txTimestamp} = await getTxCostAndTimestamp(txResult);
 
-    const { reserveData: reserveDataAfter, userData: userDataAfter } = await getContractsData(
+    const {reserveData: reserveDataAfter, userData: userDataAfter} = await getContractsData(
       reserve,
       user.address,
       testEnv
@@ -922,11 +922,11 @@ export const rebalanceStableBorrowRate = async (
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
-  const { pool } = testEnv;
+  const {pool} = testEnv;
 
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
 
-  const { reserveData: reserveDataBefore, userData: userDataBefore } = await getContractsData(
+  const {reserveData: reserveDataBefore, userData: userDataBefore} = await getContractsData(
     reserve,
     target.address,
     testEnv
@@ -937,9 +937,9 @@ export const rebalanceStableBorrowRate = async (
       await pool.connect(user.signer).rebalanceStableBorrowRate(reserve, target.address)
     );
 
-    const { txCost, txTimestamp } = await getTxCostAndTimestamp(txResult);
+    const {txCost, txTimestamp} = await getTxCostAndTimestamp(txResult);
 
-    const { reserveData: reserveDataAfter, userData: userDataAfter } = await getContractsData(
+    const {reserveData: reserveDataAfter, userData: userDataAfter} = await getContractsData(
       reserve,
       target.address,
       testEnv
@@ -1002,7 +1002,7 @@ const getDataBeforeAction = async (
 ): Promise<ActionData> => {
   const reserve = await getTestnetReserveAddressFromSymbol(reserveSymbol);
 
-  const { reserveData, userData } = await getContractsData(reserve, user, testEnv);
+  const {reserveData, userData} = await getContractsData(reserve, user, testEnv);
   const aTokenInstance = await getAToken(reserveData.aTokenAddress);
   return {
     reserve,
@@ -1024,7 +1024,7 @@ export const getTxCostAndTimestamp = async (tx: ContractReceipt) => {
   const gasPrice = txInfo.gasPrice ? txInfo.gasPrice : tx.effectiveGasPrice;
   const txCost = BigNumber.from(tx.cumulativeGasUsed).mul(gasPrice);
 
-  return { txCost, txTimestamp };
+  return {txCost, txTimestamp};
 };
 
 export const getContractsData = async (
@@ -1033,7 +1033,7 @@ export const getContractsData = async (
   testEnv: TestEnv,
   sender?: string
 ) => {
-  const { pool, helpersContract } = testEnv;
+  const {pool, helpersContract} = testEnv;
 
   const [userData, reserveData, timestamp] = await Promise.all([
     getUserData(pool, helpersContract, reserve, user, sender || user),

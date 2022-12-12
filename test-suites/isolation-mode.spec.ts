@@ -16,7 +16,7 @@ import {
 import {getReserveData, getUserData} from './helpers/utils/helpers';
 import {getTxCostAndTimestamp} from './helpers/actions';
 import AaveConfig from '@mahalend/deploy-v3/dist/markets/test';
-import {getACLManager} from '@mahalend/deploy-v3/dist/helpers/contract-getters';
+import {getACLManager} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
 import {
   calcExpectedReserveDataAfterMintUnbacked,
   configuration as calculationsConfiguration,

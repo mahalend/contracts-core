@@ -9,7 +9,7 @@ import {
   SequencerOracle,
   SequencerOracle__factory,
 } from '../types';
-import {getFirstSigner} from '@mahalend/deploy-v3/dist/helpers/utilities/signer';
+import {getFirstSigner} from '@mahalend/deploy-v3/dist/src/helpers/utilities/signer';
 import {makeSuite, TestEnv} from './helpers/make-suite';
 import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
 import {calcExpectedVariableDebtTokenBalance} from './helpers/utils/calculations';
