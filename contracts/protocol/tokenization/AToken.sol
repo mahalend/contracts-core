@@ -271,15 +271,4 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
     require(token != _underlyingAsset, Errors.UNDERLYING_CANNOT_BE_RESCUED);
     IERC20(token).safeTransfer(to, amount);
   }
-
-  function setTreasury(address treasury) external onlyPoolAdmin {
-    _treasury = treasury;
-  }
-
-  function setIncentiveController(IAaveIncentivesController incentivesController)
-    external
-    onlyPoolAdmin
-  {
-    _incentivesController = incentivesController;
-  }
 }
