@@ -5,7 +5,9 @@ import {IPool} from '../../../interfaces/IPool.sol';
 import {IInitializableAToken} from '../../../interfaces/IInitializableAToken.sol';
 import {IInitializableDebtToken} from '../../../interfaces/IInitializableDebtToken.sol';
 import {IAaveIncentivesController} from '../../../interfaces/IAaveIncentivesController.sol';
-import {InitializableImmutableAdminUpgradeabilityProxy} from '../aave-upgradeability/InitializableImmutableAdminUpgradeabilityProxy.sol';
+import {
+  InitializableImmutableAdminUpgradeabilityProxy
+} from '../aave-upgradeability/InitializableImmutableAdminUpgradeabilityProxy.sol';
 import {ReserveConfiguration} from '../configuration/ReserveConfiguration.sol';
 import {DataTypes} from '../types/DataTypes.sol';
 import {ConfiguratorInputTypes} from '../types/ConfiguratorInputTypes.sol';
@@ -238,9 +240,9 @@ library ConfiguratorLogic {
     internal
     returns (address)
   {
-    InitializableImmutableAdminUpgradeabilityProxy proxy = new InitializableImmutableAdminUpgradeabilityProxy(
-        address(this)
-      );
+
+      InitializableImmutableAdminUpgradeabilityProxy proxy
+     = new InitializableImmutableAdminUpgradeabilityProxy(address(this));
 
     proxy.initialize(implementation, initParams);
 
@@ -259,9 +261,9 @@ library ConfiguratorLogic {
     address implementation,
     bytes memory initParams
   ) internal {
-    InitializableImmutableAdminUpgradeabilityProxy proxy = InitializableImmutableAdminUpgradeabilityProxy(
-        payable(proxyAddress)
-      );
+
+      InitializableImmutableAdminUpgradeabilityProxy proxy
+     = InitializableImmutableAdminUpgradeabilityProxy(payable(proxyAddress));
 
     proxy.upgradeToAndCall(implementation, initParams);
   }

@@ -53,11 +53,12 @@ const hardhatConfig: HardhatUserConfig = {
     bail: true,
   },
   etherscan: {
-    apiKey: {
-      mainnet: ETHERSCAN_KEY,
-      goerli: ETHERSCAN_KEY,
-      polygon: POLYGONSCAN_KEY,
-    },
+    apiKey: ETHERSCAN_KEY,
+    // apiKey: {
+    //   mainnet: ETHERSCAN_KEY,
+    //   goerli: ETHERSCAN_KEY,
+    //   polygon: POLYGONSCAN_KEY,
+    // },
   },
   tenderly: {
     project: process.env.TENDERLY_PROJECT || '',
