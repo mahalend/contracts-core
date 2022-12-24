@@ -869,10 +869,10 @@
   resolved "https://registry.yarnpkg.com/@mahalend/deploy/-/deploy-2.5.0.tgz#c1d95f9727d9fa57aeacb9030298f7b13cb2ab74"
   integrity sha512-6JNdvjtyJYhajTuZzR2qCPxCexOgbMvIF5p4CLoS8bL//G5YQQ6dZh1q2tD61hE0104MQvwKQYa4W0E7BqcqBQ==
 
-"@mahalend/periphery@^3.3.1":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@mahalend/periphery/-/periphery-3.3.1.tgz#a658156ab935fb8b76e06faa9aa9a031a94e0fb7"
-  integrity sha512-3/Z8GZ14WSXi+v7RtGfvBj5rMsBI+H/dFMuGMAC+B2v4ihhGZSwOtedW4ZnVziVPFp/HjsLPRtvN/exCvEFaNA==
+"@mahalend/periphery@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@mahalend/periphery/-/periphery-4.0.0.tgz#848734553144888c11b4b756a64da58a8070e6fc"
+  integrity sha512-WP84bn32v8JL3REx6J4XXfNLA0ZxXnEXkyZKXEO7P+u1V4QGQZCFnhriYL9YRb8Hb+Y7sLEvXgcL/+3ZRyMbHA==
 
 "@metamask/eth-sig-util@^4.0.0":
   version "4.0.1"
