@@ -16,7 +16,7 @@ async function main() {
 
   const asset = '0x8cc0f052fff7ead7f2edcccac895502e884a8a71';
   const treasury = '0x6357EDbfE5aDA570005ceB8FAd3139eF5A8863CC';
-  const incentivesController = '0x7DEb36c5D3f2B4894a0a21De8D13D5d3a0981fE2';
+  const incentivesController = '0xda25Ded8373B7984Ce6b2e0E35f204AcC2382Fd2';
   const name = 'MahaLend ARTH';
   const symbol = 'mARTH';
   const implementation = '0x39F07A833F4Ba8d570fEEfE42b7CD342e7Ec7329';
@@ -28,7 +28,7 @@ async function main() {
 
   try {
     // console.log(await poolc.callStatic.admin());
-    await poolc.updateAToken(tuple);
+    await poolc.estimateGas.updateAToken(tuple);
   } catch (error) {
     console.log(error);
   }
