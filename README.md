@@ -1,27 +1,21 @@
 # MahaLend Protocol
 
-This repository contains the smart contracts source code and markets configuration for the MahaLend Protocol. The repository uses Docker Compose and Hardhat as development environment for compilation, testing and deployment tasks.
+This repository contains the smart contracts source code and markets configuration for the MahaLend Protocol.
 
-## What is MahaLend?
-
-Aave is a decentralized non-custodial liquidity markets protocol where users can participate as suppliers or borrowers. Suppliers provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralized (perpetually) or undercollateralized (one-block liquidity) fashion.
-
-- [Developer Documentation](https://docs.mahalend.com)
-
-## Connect with the community
-
-You can join at the [Discord](http://discord.gg/mahadao) channel or at the [Governance Forum](https://discuss.mahadao.com/) for asking questions about the protocol or talk about MahaLend with other peers.
+- [Documentation](https://docs.mahalend.com)
+- [Discord](https://discord.gg/mahadao)
+- [Governance Forums](https://discuss.mahadao.com)
 
 ## Getting Started
 
-You can install `@mahalend/core-v3` as an NPM package in your Hardhat or Truffle project to import the contracts and interfaces:
+You can install `@mahalend/core` as an NPM package in your Hardhat or Truffle project to import the contracts and interfaces:
 
-`npm install @mahalend/core-v3`
+`npm install @mahalend/core`
 
 Import at Solidity files:
 
 ```
-import {IPool} from "@mahalend/core-v3/contracts/interfaces/IPool.sol";
+import {IPool} from "@mahalend/core/contracts/interfaces/IPool.sol";
 
 contract Misc {
 
@@ -37,7 +31,7 @@ The JSON artifacts with the ABI and Bytecode are also included into the bundled 
 Import JSON file via Node JS `require`:
 
 ```
-const PoolV3Artifact = require('@mahalend/core-v3/artifacts/contracts/protocol/pool/Pool.sol/Pool.json');
+const PoolV3Artifact = require('@mahalend/core/artifacts/contracts/protocol/pool/Pool.sol/Pool.json');
 
 // Log the ABI into console
 console.log(PoolV3Artifact.abi)
