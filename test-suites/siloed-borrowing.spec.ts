@@ -5,7 +5,7 @@ import {AAVE_REFERRAL, MAX_UINT_AMOUNT, MAX_UNBACKED_MINT_CAP} from '../helpers/
 import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
 import {TestEnv, makeSuite} from './helpers/make-suite';
 import './helpers/utils/wadraymath';
-import {evmSnapshot} from '@mahalend/deploy-v3';
+import {evmSnapshot} from '@mahalend/deploy';
 
 makeSuite('Siloed borrowing', (testEnv: TestEnv) => {
   const {SILOED_BORROWING_VIOLATION} = ProtocolErrors;

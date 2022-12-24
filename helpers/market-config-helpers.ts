@@ -26,7 +26,7 @@ import {
 import {ZERO_ADDRESS} from './constants';
 import {ENABLE_REWARDS} from './env';
 import {iParamsPerNetwork, eNetwork} from './types';
-import {IBaseConfiguration, SubTokenOutput} from '@mahalend/deploy-v3';
+import {IBaseConfiguration, SubTokenOutput} from '@mahalend/deploy';
 
 export enum ConfigNames {
   Commons = 'Commons',

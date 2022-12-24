@@ -13,7 +13,7 @@ import {
   IERC20Detailed__factory,
 } from '../types';
 import {parseEther, parseUnits} from '@ethersproject/units';
-import {waitForTx} from '@mahalend/deploy-v3';
+import {waitForTx} from '@mahalend/deploy';
 
 makeSuite('Pool: Simple FlashLoan', (testEnv: TestEnv) => {
   let _mockFlashLoanSimpleReceiver = {} as MockFlashLoanSimpleReceiver;

@@ -1,4 +1,4 @@
-import {evmSnapshot, evmRevert} from '@mahalend/deploy-v3';
+import {evmSnapshot, evmRevert} from '@mahalend/deploy';
 import {expect} from 'chai';
 import {BigNumber, utils} from 'ethers';
 import {HARDHAT_CHAINID, MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';

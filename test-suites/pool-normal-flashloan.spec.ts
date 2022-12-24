@@ -8,7 +8,7 @@ import {
   getMockFlashLoanReceiver,
   getStableDebtToken,
   getVariableDebtToken,
-} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
+} from '@mahalend/deploy/dist/helpers/contract-getters';
 import {TestEnv, makeSuite} from './helpers/make-suite';
 import './helpers/utils/wadraymath';
 

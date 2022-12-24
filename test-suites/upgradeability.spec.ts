@@ -10,8 +10,8 @@ import {
   getMockVariableDebtToken,
   getStableDebtToken,
   getVariableDebtToken,
-} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
-import {getFirstSigner} from '@mahalend/deploy-v3/dist/src/helpers/utilities/signer';
+} from '@mahalend/deploy/dist/helpers/contract-getters';
+import {getFirstSigner} from '@mahalend/deploy/dist/helpers/utilities/signer';
 import {
   deployInitializableImmutableAdminUpgradeabilityProxy,
   deployMockAToken,
@@ -21,12 +21,12 @@ import {
   deployMockReentrantInitializableImple,
   deployMockStableDebtToken,
   deployMockVariableDebtToken,
-} from '@mahalend/deploy-v3/dist/src/helpers/contract-deployments';
+} from '@mahalend/deploy/dist/helpers/contract-deployments';
 import {
   InitializableImmutableAdminUpgradeabilityProxy,
   InitializableImmutableAdminUpgradeabilityProxy__factory,
 } from '../types';
-import {evmSnapshot, evmRevert, getEthersSigners} from '@mahalend/deploy-v3';
+import {evmSnapshot, evmRevert, getEthersSigners} from '@mahalend/deploy';
 
 makeSuite('Upgradeability', (testEnv: TestEnv) => {
   context('VersionedInitializable', async () => {

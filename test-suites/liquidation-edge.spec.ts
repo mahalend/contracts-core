@@ -12,7 +12,7 @@ import {
   waitForTx,
   StableDebtToken__factory,
   VariableDebtToken__factory,
-} from '@mahalend/deploy-v3';
+} from '@mahalend/deploy';
 
 makeSuite('Pool Liquidation: Edge cases', (testEnv: TestEnv) => {
   let snap: string;

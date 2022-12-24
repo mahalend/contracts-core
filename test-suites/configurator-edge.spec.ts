@@ -10,7 +10,7 @@ import {
   ZERO_ADDRESS,
 } from '../helpers/constants';
 import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
-import {impersonateAddress} from '@mahalend/deploy-v3';
+import {impersonateAddress} from '@mahalend/deploy';
 import {topUpNonPayableWithEther} from './helpers/utils/funds';
 import {parseUnits} from 'ethers/lib/utils';
 

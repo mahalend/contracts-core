@@ -96,13 +96,13 @@
 
 ### Features
 
-- bump @mahalend/deploy-v3 ([430c9d3](https://www.github.com/aave/aave-v3-core/commit/430c9d3eebfafc6349ead5860016e25ff43fb547))
+- bump @mahalend/deploy ([430c9d3](https://www.github.com/aave/aave-v3-core/commit/430c9d3eebfafc6349ead5860016e25ff43fb547))
 
 ## [1.12.0](https://www.github.com/aave/aave-v3-core/compare/v1.11.1...v1.12.0) (2022-01-25)
 
 ### Features
 
-- bump @mahalend/deploy-v3 version ([85ec0fe](https://www.github.com/aave/aave-v3-core/commit/85ec0fe7cb45ae227b74ceb53c9088612034a3dc))
+- bump @mahalend/deploy version ([85ec0fe](https://www.github.com/aave/aave-v3-core/commit/85ec0fe7cb45ae227b74ceb53c9088612034a3dc))
 
 ### Bug Fixes
 
@@ -380,7 +380,7 @@
 - Update natspec docs for FlashLoanLogic ([4b02b3e](https://www.github.com/aave/aave-v3-core/commit/4b02b3e6cf2f4f1c3f7f583652b3b9ff3a41b94e))
 - Update variable packing of `ReserveData` ([7765624](https://www.github.com/aave/aave-v3-core/commit/77656242fd9e61c2080f938e7514d719c0015a91))
 - Update wording of token update functions in ConfiguratorLogic ([2dd1551](https://www.github.com/aave/aave-v3-core/commit/2dd15513c1930d739aff0b14e2c94770b0e38004))
-- use @mahalend/deploy-v3@1.7.1 library and load typechain locally instead of deploy-v3, to fix unsynced artifacts ([6904746](https://www.github.com/aave/aave-v3-core/commit/690474641fef8efa0dd95f645cb3e9b8d4eab3e5))
+- use @mahalend/deploy@1.7.1 library and load typechain locally instead of deploy, to fix unsynced artifacts ([6904746](https://www.github.com/aave/aave-v3-core/commit/690474641fef8efa0dd95f645cb3e9b8d4eab3e5))
 - Use `checkNoSuppliers` instead of `CheckNoDepositors` ([88aff43](https://www.github.com/aave/aave-v3-core/commit/88aff43cebb660689c6fcdd84560a5ebe9f98911))
 - use already calculated value instead of re-calculating ([c0743f9](https://www.github.com/aave/aave-v3-core/commit/c0743f95890eb6e6c0ee873775b81aa952b55753))
 - Use cache to get `aTokenAddress` in bridge logic ([e41ec39](https://www.github.com/aave/aave-v3-core/commit/e41ec395182296ee1226ed4b57914abdd3321fa0))

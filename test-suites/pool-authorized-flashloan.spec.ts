@@ -4,7 +4,7 @@ import {
   getMockFlashLoanReceiver,
   getStableDebtToken,
   getVariableDebtToken,
-} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
+} from '@mahalend/deploy/dist/helpers/contract-getters';
 import {ProtocolErrors} from '../helpers/types';
 import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
 import {MAX_UINT_AMOUNT} from '../helpers/constants';

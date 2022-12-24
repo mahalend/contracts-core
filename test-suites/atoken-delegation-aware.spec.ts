@@ -3,7 +3,7 @@ import {expect} from 'chai';
 import {ZERO_ADDRESS} from '../helpers/constants';
 import {ProtocolErrors} from '../helpers/types';
 import {makeSuite, TestEnv} from './helpers/make-suite';
-import {deployMintableDelegationERC20, deployDelegationAwareAToken} from '@mahalend/deploy-v3';
+import {deployMintableDelegationERC20, deployDelegationAwareAToken} from '@mahalend/deploy';
 
 makeSuite('AToken: DelegationAwareAToken', (testEnv: TestEnv) => {
   let delegationAToken = <DelegationAwareAToken>{};

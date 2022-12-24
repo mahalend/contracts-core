@@ -1,4 +1,4 @@
-import {waitForTx, increaseTime, ZERO_ADDRESS} from '@mahalend/deploy-v3';
+import {waitForTx, increaseTime, ZERO_ADDRESS} from '@mahalend/deploy';
 import {expect} from 'chai';
 import {BigNumber, utils} from 'ethers';
 import {MAX_UINT_AMOUNT} from '../helpers/constants';

@@ -6,7 +6,7 @@ import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
 import {makeSuite, TestEnv} from './helpers/make-suite';
 import './helpers/utils/wadraymath';
 import {parseUnits, formatUnits, parseEther} from '@ethersproject/units';
-import {evmSnapshot, evmRevert, VariableDebtToken__factory} from '@mahalend/deploy-v3';
+import {evmSnapshot, evmRevert, VariableDebtToken__factory} from '@mahalend/deploy';
 
 makeSuite('EfficiencyMode', (testEnv: TestEnv) => {
   const {

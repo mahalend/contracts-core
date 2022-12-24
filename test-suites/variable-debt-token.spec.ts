@@ -7,7 +7,7 @@ import {makeSuite, TestEnv} from './helpers/make-suite';
 import {topUpNonPayableWithEther} from './helpers/utils/funds';
 import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
 import {HardhatRuntimeEnvironment} from 'hardhat/types';
-import {evmRevert, evmSnapshot, increaseTime, waitForTx} from '@mahalend/deploy-v3';
+import {evmRevert, evmSnapshot, increaseTime, waitForTx} from '@mahalend/deploy';
 import {VariableDebtToken__factory} from '../types';
 import './helpers/utils/wadraymath';
 

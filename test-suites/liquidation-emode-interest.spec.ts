@@ -8,7 +8,7 @@ import {getReserveData, getUserData} from './helpers/utils/helpers';
 import {makeSuite, TestEnv} from './helpers/make-suite';
 import './helpers/utils/wadraymath';
 import {HardhatRuntimeEnvironment} from 'hardhat/types';
-import {waitForTx, increaseTime} from '@mahalend/deploy-v3';
+import {waitForTx, increaseTime} from '@mahalend/deploy';
 
 declare var hre: HardhatRuntimeEnvironment;
 

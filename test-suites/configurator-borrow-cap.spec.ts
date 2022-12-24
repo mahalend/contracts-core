@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {utils} from 'ethers';
-import {advanceTimeAndBlock} from '@mahalend/deploy-v3';
+import {advanceTimeAndBlock} from '@mahalend/deploy';
 import {MAX_UINT_AMOUNT, MAX_BORROW_CAP} from '../helpers/constants';
 import {convertToCurrencyDecimals} from '../helpers/contracts-helpers';
 import {ProtocolErrors, RateMode} from '../helpers/types';

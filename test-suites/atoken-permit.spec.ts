@@ -1,4 +1,4 @@
-import {waitForTx} from '@mahalend/deploy-v3';
+import {waitForTx} from '@mahalend/deploy';
 import {expect} from 'chai';
 import {ethers, utils} from 'ethers';
 import {HARDHAT_CHAINID, MAX_UINT_AMOUNT, ZERO_ADDRESS} from '../helpers/constants';

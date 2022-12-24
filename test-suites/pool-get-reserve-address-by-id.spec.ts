@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {makeSuite, TestEnv} from './helpers/make-suite';
-import {evmSnapshot, evmRevert, ZERO_ADDRESS} from '@mahalend/deploy-v3';
+import {evmSnapshot, evmRevert, ZERO_ADDRESS} from '@mahalend/deploy';
 
 makeSuite('Pool: getReservesList', (testEnv: TestEnv) => {
   let snap: string;

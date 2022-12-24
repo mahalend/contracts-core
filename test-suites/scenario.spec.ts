@@ -1,5 +1,5 @@
 import fs from 'fs';
-import AaveConfig from '@mahalend/deploy-v3/dist/markets/test';
+import AaveConfig from '@mahalend/deploy/dist/markets/test';
 import {configuration as actionsConfiguration} from './helpers/actions';
 import {configuration as calculationsConfiguration} from './helpers/utils/calculations';
 import {makeSuite} from './helpers/make-suite';

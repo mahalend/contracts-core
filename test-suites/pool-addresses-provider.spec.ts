@@ -5,16 +5,13 @@ import {createRandomAddress} from '../helpers/misc-utils';
 import {ProtocolErrors} from '../helpers/types';
 import {ZERO_ADDRESS} from '../helpers/constants';
 import {makeSuite, TestEnv} from './helpers/make-suite';
-import {
-  deployPool,
-  deployMockPool,
-} from '@mahalend/deploy-v3/dist/src/helpers/contract-deployments';
+import {deployPool, deployMockPool} from '@mahalend/deploy/dist/helpers/contract-deployments';
 import {
   evmSnapshot,
   evmRevert,
   getFirstSigner,
   InitializableAdminUpgradeabilityProxy__factory,
-} from '@mahalend/deploy-v3';
+} from '@mahalend/deploy';
 import {MockPeripheryContractV1__factory, MockPeripheryContractV2__factory} from '../types';
 import {getProxyAdmin, getProxyImplementation} from '../helpers/contracts-helpers';
 

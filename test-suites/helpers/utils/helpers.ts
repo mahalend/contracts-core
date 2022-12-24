@@ -6,12 +6,12 @@ import {
   getStableDebtToken,
   getVariableDebtToken,
   getIRStrategy,
-} from '@mahalend/deploy-v3/dist/src/helpers/contract-getters';
+} from '@mahalend/deploy/dist/helpers/contract-getters';
 import {tEthereumAddress} from '../../../helpers/types';
 import {AaveProtocolDataProvider} from '../../../types/AaveProtocolDataProvider';
 import {BigNumber} from 'ethers';
 import {AToken} from '../../../types';
-import {getContract} from '@mahalend/deploy-v3';
+import {getContract} from '@mahalend/deploy';
 import {expect} from 'chai';
 
 export const getReserveData = async (
