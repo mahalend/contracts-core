@@ -1,5 +1,4 @@
-import path from 'path';
-import { HardhatUserConfig } from 'hardhat/types';
+import { HardhatNetworkConfig, HardhatUserConfig } from 'hardhat/types';
 // @ts-ignore
 import { accounts } from './test-wallets.js';
 import { COVERAGE_CHAINID, HARDHAT_CHAINID } from './helpers/constants';
@@ -19,7 +18,7 @@ import { DEFAULT_NAMED_ACCOUNTS } from '@aave/deploy-v3';
 const DEFAULT_BLOCK_GAS_LIMIT = 12450000;
 const HARDFORK = 'london';
 
-const hardhatConfig = {
+const hardhatConfig: HardhatUserConfig = {
   gasReporter: {
     enabled: true,
   },
@@ -67,12 +66,12 @@ const hardhatConfig = {
       chainId: HARDHAT_CHAINID,
       throwOnTransactionFailures: true,
       throwOnCallFailures: true,
-      forking: buildForkConfig(),
+      // forking: buildForkConfig(),
       allowUnlimitedContractSize: true,
-      accounts: accounts.map(({ secretKey, balance }: { secretKey: string; balance: string }) => ({
-        privateKey: secretKey,
-        balance,
-      })),
+      // accounts: accounts.map(({ secretKey, balance }: { secretKey: string; balance: string }) => ({
+      //   privateKey: secretKey,
+      //   balance,
+      // })),
     },
     ganache: {
       url: 'http://ganache:8545',
