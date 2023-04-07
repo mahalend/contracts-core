@@ -30,7 +30,7 @@
     "ci:clean": "rm -rf ./artifacts ./cache ./types ./temp-artifacts",
     "prepare": "husky install",
     "build": "tsc --project lib.tsconfig.json",
-    "prepublish": "npm run compile && npm run build"
+    "prepublish-dis": "npm run compile && npm run build"
   },
   "devDependencies": {
     "@aave/deploy-v3": "1.51.0",
