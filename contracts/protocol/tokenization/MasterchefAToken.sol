@@ -129,7 +129,7 @@ contract MasterchefAToken is AToken, FeeBase {
     uint256 index
   ) external virtual override nonReentrant onlyPool {
     // withdraw lp from masterchef
-    chef.withdraw(pid, amount, msg.sender);
+    chef.withdraw(pid, amount, address(this));
 
     // harvest rewards
     harvest();
