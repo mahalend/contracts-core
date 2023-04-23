@@ -13,6 +13,8 @@ import 'hardhat-contract-sizer';
 import 'hardhat-dependency-compiler';
 import '@nomicfoundation/hardhat-chai-matchers';
 
+import '@matterlabs/hardhat-zksync-toolbox';
+
 import { DEFAULT_NAMED_ACCOUNTS } from '@aave/deploy-v3';
 
 const DEFAULT_BLOCK_GAS_LIMIT = 12450000;
