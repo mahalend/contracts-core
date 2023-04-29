@@ -177,8 +177,7 @@ contract MasterchefAToken is AToken, FeeBase {
   function _accumulatedRewardsForAmount(uint256 bal) internal view returns (uint256) {
     uint256 accRewards = _accumulatedRewards();
     uint256 total = totalSupply();
-    uint256 perc = (bal * 1e18) / (total);
-    return (accRewards * perc) / (1e18);
+    return (accRewards * bal) / (total);
   }
 
   function setRewardFeeRate(uint256 _new) external onlyPoolAdmin {

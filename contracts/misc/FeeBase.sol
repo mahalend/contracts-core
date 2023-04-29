@@ -2,14 +2,11 @@
 
 pragma solidity ^0.8.0;
 
-import {Ownable} from '../dependencies/openzeppelin/contracts/Ownable.sol';
 import {IERC20} from '../dependencies/openzeppelin/contracts/IERC20.sol';
 import {GPv2SafeERC20} from '../dependencies/gnosis/contracts/GPv2SafeERC20.sol';
-import {SafeMath} from '../dependencies/openzeppelin/contracts/SafeMath.sol';
 
 contract FeeBase {
   using GPv2SafeERC20 for IERC20;
-  using SafeMath for uint256;
 
   uint256 public pct100;
   uint256 public rewardFeeRate;
