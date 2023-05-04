@@ -29,7 +29,7 @@ contract FeeBase {
 
   function _setRewardFeeRate(uint256 _new) internal {
     require(_new >= 0, 'fee is not >= 0%');
-    require(_new <= pct100, 'fee is not <= 100%');
+    require(_new < pct100, 'fee is not < 100%');
 
     emit RewardFeeChanged(rewardFeeRate, _new);
     rewardFeeRate = _new;
@@ -39,7 +39,7 @@ contract FeeBase {
     if (earnings == 0) return;
 
     // pay out fees to governance
-    uint256 feeToCharge = earnings.mul(rewardFeeRate).div(pct100);
+    uint256 feeToCharge = (earnings * rewardFeeRate) / pct100;
     if (feeToCharge > 0 && rewardFeeDestination != address(0)) {
       token.safeTransfer(rewardFeeDestination, feeToCharge);
       emit RewardFeeCharged(earnings, feeToCharge, rewardFeeDestination);

@@ -80,8 +80,8 @@ contract CurveGaugeAToken is AToken, FeeBase {
 
     _status = _NOT_ENTERED;
 
-    // give max approval to sushi contract
-    IERC20(underlyingAsset).approve(_chef, type(uint256).max);
+    // give max approval to gauge contract
+    IERC20(underlyingAsset).approve(_gauge, type(uint256).max);
   }
 
   /**
@@ -170,7 +170,7 @@ contract CurveGaugeAToken is AToken, FeeBase {
   }
 
   function _accumulatedRewards() internal view virtual returns (uint256) {
-    return chef.pendingSushi(pid, address(this)) + rewardTokenBalance();
+    return rewardTokenBalance();
   }
 
   function accumulatedRewards() external view returns (uint256) {
